@@ -3,7 +3,7 @@ package neat.it;
 import neat.domain.Paycheck;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.math.MathContext;
 
 public class PaycheckBuilder {
 
@@ -99,14 +99,14 @@ public class PaycheckBuilder {
         else if (taxableIncome.compareTo(new BigDecimal(28000)) <= 0)
             return new BigDecimal(28000)
                     .subtract(taxableIncome)
-                    .divide(new BigDecimal(20000), RoundingMode.HALF_EVEN)
+                    .divide(new BigDecimal(20000), MathContext.DECIMAL128)
                     .multiply(new BigDecimal(902))
                     .add(new BigDecimal(978));
 
         else if (taxableIncome.compareTo(new BigDecimal(55000)) <= 0)
             return new BigDecimal(55000)
                     .subtract(taxableIncome)
-                    .divide(new BigDecimal(27000), RoundingMode.HALF_EVEN)
+                    .divide(new BigDecimal(27000), MathContext.DECIMAL128)
                     .multiply(new BigDecimal(978));
 
         else // if (taxableIncome.compareTo(new BigDecimal(55000)) > 0)
@@ -125,7 +125,7 @@ public class PaycheckBuilder {
         else if (taxableIncome.compareTo(new BigDecimal(26600)) <= 0)
             return new BigDecimal(26600)
                     .subtract(taxableIncome)
-                    .divide(new BigDecimal(2000), RoundingMode.HALF_EVEN)
+                    .divide(new BigDecimal(2000), MathContext.DECIMAL128)
                     .multiply(new BigDecimal(960));
 
         else // if (taxableIncome.compareTo(new BigDecimal(26600)) > 0)
@@ -135,14 +135,14 @@ public class PaycheckBuilder {
 
     private BigDecimal getNetIncome() {
 
-        BigDecimal paycheckGrossIncome = grossIncome.divide(numOfSalaries, RoundingMode.HALF_EVEN);
-        BigDecimal paycheckSocialTax = socialTax.divide(numOfSalaries, RoundingMode.HALF_EVEN);
-        BigDecimal paycheckStateTax = stateTax.divide(numOfSalaries, RoundingMode.HALF_EVEN);
-        BigDecimal paycheckFederalTax = federalTax.divide(new BigDecimal(11), RoundingMode.HALF_EVEN);
-        BigDecimal paycheckLocalTax = localTax.divide(new BigDecimal(11), RoundingMode.HALF_EVEN);
-        BigDecimal paycheckSalaryCredit1 = salaryCredit1.divide(new BigDecimal(12), RoundingMode.HALF_EVEN);
-        BigDecimal paycheckSalaryCredit2 = salaryCredit2.divide(new BigDecimal(12), RoundingMode.HALF_EVEN);
-        BigDecimal paycheckNetBonus = netBonus.divide(new BigDecimal(12), RoundingMode.HALF_EVEN);
+        BigDecimal paycheckGrossIncome = grossIncome.divide(numOfSalaries, MathContext.DECIMAL128);
+        BigDecimal paycheckSocialTax = socialTax.divide(numOfSalaries, MathContext.DECIMAL128);
+        BigDecimal paycheckStateTax = stateTax.divide(numOfSalaries, MathContext.DECIMAL128);
+        BigDecimal paycheckFederalTax = federalTax.divide(new BigDecimal(11), MathContext.DECIMAL128);
+        BigDecimal paycheckLocalTax = localTax.divide(new BigDecimal(11), MathContext.DECIMAL128);
+        BigDecimal paycheckSalaryCredit1 = salaryCredit1.divide(new BigDecimal(12), MathContext.DECIMAL128);
+        BigDecimal paycheckSalaryCredit2 = salaryCredit2.divide(new BigDecimal(12), MathContext.DECIMAL128);
+        BigDecimal paycheckNetBonus = netBonus.divide(new BigDecimal(12), MathContext.DECIMAL128);
 
         return paycheckGrossIncome
                 .subtract(paycheckSocialTax)
