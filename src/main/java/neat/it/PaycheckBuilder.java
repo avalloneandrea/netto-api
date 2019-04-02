@@ -7,6 +7,8 @@ import java.math.MathContext;
 
 public class PaycheckBuilder {
 
+    private static final BigDecimal NO_TAX_AREA = new BigDecimal(8174);
+
     private final BigDecimal grossIncome;
     private final BigDecimal numOfSalaries;
     private final BigDecimal netBonus;
@@ -42,7 +44,13 @@ public class PaycheckBuilder {
     }
 
     private BigDecimal getSocialTax() {
-        return grossIncome.multiply(new BigDecimal(0.0919));
+
+        if (grossIncome.compareTo(BigDecimal.ZERO) <= 0)
+            return BigDecimal.ZERO;
+
+        else // if (grossIncome.compareTo(BigDecimal.ZERO) > 0)
+            return grossIncome.multiply(new BigDecimal(0.0919));
+
     }
 
     private BigDecimal getTaxableIncome() {
@@ -51,8 +59,8 @@ public class PaycheckBuilder {
 
     private BigDecimal getStateTax() {
 
-        if (taxableIncome.compareTo(new BigDecimal(8174)) <= 0)
-            return new BigDecimal(0);
+        if (taxableIncome.compareTo(NO_TAX_AREA) <= 0)
+            return BigDecimal.ZERO;
 
         else if (taxableIncome.compareTo(new BigDecimal(15000)) <= 0)
             return taxableIncome.multiply(new BigDecimal(0.23));
@@ -84,16 +92,28 @@ public class PaycheckBuilder {
     }
 
     private BigDecimal getFederalTax() {
-        return taxableIncome.multiply(new BigDecimal(0.0203));
+
+        if (taxableIncome.compareTo(NO_TAX_AREA) <= 0)
+            return BigDecimal.ZERO;
+
+        else // if (taxableIncome.compareTo(NO_TAX_AREA) > 0)
+            return taxableIncome.multiply(new BigDecimal(0.0203));
+
     }
 
     private BigDecimal getLocalTax() {
-        return taxableIncome.multiply(new BigDecimal(0.008));
+
+        if (taxableIncome.compareTo(NO_TAX_AREA) <= 0)
+            return BigDecimal.ZERO;
+
+        else // if (taxableIncome.compareTo(NO_TAX_AREA) > 0)
+            return taxableIncome.multiply(new BigDecimal(0.008));
+
     }
 
     private BigDecimal getSalaryCredit1() {
 
-        if (taxableIncome.compareTo(new BigDecimal(8174)) <= 0)
+        if (taxableIncome.compareTo(NO_TAX_AREA) <= 0)
             return BigDecimal.ZERO;
 
         else if (taxableIncome.compareTo(new BigDecimal(28000)) <= 0)
@@ -116,7 +136,7 @@ public class PaycheckBuilder {
 
     private BigDecimal getSalaryCredit2() {
 
-        if (taxableIncome.compareTo(new BigDecimal(8174)) <= 0)
+        if (taxableIncome.compareTo(NO_TAX_AREA) <= 0)
             return BigDecimal.ZERO;
 
         else if (taxableIncome.compareTo(new BigDecimal(24600)) <= 0)
