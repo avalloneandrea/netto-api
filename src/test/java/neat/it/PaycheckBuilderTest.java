@@ -45,4 +45,23 @@ public class PaycheckBuilderTest {
         Assert.assertEquals(BigDecimal.ZERO, paycheck.getNetIncome());
     }
 
+    @Test
+    @Parameters({
+            "-3, 4649", "-2, 4649", "-1, 4649",
+            "-0.5, 4649", "0, 4649", "0.5, 4649",
+            "1, 4273", "2, 3951", "3, 3672"
+    })
+    public void buildPaycheckOnNumericalAdditionalSalaries(BigDecimal input, BigDecimal expected) {
+        PaycheckBuilder paycheckBuilder = new PaycheckBuilder(new BigDecimal(100000), input, BigDecimal.ZERO);
+        Paycheck paycheck = paycheckBuilder.build();
+        Assert.assertEquals(expected, paycheck.getNetIncome());
+    }
+
+    @Test
+    public void buildPaycheckOnNullAdditionalSalaries() {
+        PaycheckBuilder paycheckBuilder = new PaycheckBuilder(new BigDecimal(100000), null, BigDecimal.ZERO);
+        Paycheck paycheck = paycheckBuilder.build();
+        Assert.assertEquals(new BigDecimal("4649"), paycheck.getNetIncome());
+    }
+
 }
