@@ -4,6 +4,7 @@ import neat.domain.Paycheck;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.math.RoundingMode;
 
 public class PaycheckBuilder {
 
@@ -28,9 +29,11 @@ public class PaycheckBuilder {
 
     public PaycheckBuilder(BigDecimal grossIncome, BigDecimal additionalSalaries, BigDecimal netBonus) {
 
-        this.grossIncome = grossIncome;
-        this.numOfSalaries = new BigDecimal(12).add(additionalSalaries);
-        this.netBonus = netBonus;
+        this.grossIncome = valueOrZero(grossIncome);
+        this.numOfSalaries = valueOrZero(additionalSalaries)
+                .setScale(0, RoundingMode.DOWN)
+                .add(new BigDecimal(12));
+        this.netBonus = valueOrZero(netBonus);
 
         this.socialTax = getSocialTax();
         this.taxableIncome = getTaxableIncome();
@@ -40,6 +43,16 @@ public class PaycheckBuilder {
         this.salaryCredit1 = getSalaryCredit1();
         this.salaryCredit2 = getSalaryCredit2();
         this.netIncome = getNetIncome();
+
+    }
+
+    private BigDecimal valueOrZero(BigDecimal value) {
+
+        if (value == null || value.compareTo(BigDecimal.ZERO) <= 0)
+            return BigDecimal.ZERO;
+
+        else // if (value.compareTo(BigDecimal.ZERO) > 0)
+            return value;
 
     }
 

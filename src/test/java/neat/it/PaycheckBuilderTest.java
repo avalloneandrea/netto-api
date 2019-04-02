@@ -14,6 +14,7 @@ public class PaycheckBuilderTest {
 
     @Test
     @Parameters({
+            "-75000, 0", "-50000, 0", "-25000, 0",
             "-1, 0", "0, 0", "1, 0",
             "2043.50, 155", "4087, 309", "6130.50, 464",
             "8173, 618", "8174, 619", "8175, 619",
@@ -35,6 +36,13 @@ public class PaycheckBuilderTest {
         PaycheckBuilder paycheckBuilder = new PaycheckBuilder(input, BigDecimal.ZERO, BigDecimal.ZERO);
         Paycheck paycheck = paycheckBuilder.build();
         Assert.assertEquals(expected, paycheck.getNetIncome());
+    }
+
+    @Test
+    public void buildPaycheckOnNullGrossIncome() {
+        PaycheckBuilder paycheckBuilder = new PaycheckBuilder(null, BigDecimal.ZERO, BigDecimal.ZERO);
+        Paycheck paycheck = paycheckBuilder.build();
+        Assert.assertEquals(BigDecimal.ZERO, paycheck.getNetIncome());
     }
 
 }
