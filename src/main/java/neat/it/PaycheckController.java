@@ -16,12 +16,12 @@ import java.math.BigDecimal;
 @Api(tags = "Italy", description = "Operations about italian paychecks")
 public class PaycheckController {
 
-    @ApiOperation(value = "Get the paycheck given the gross income")
+    @ApiOperation(value = "Get the paycheck given the income")
     @RequestMapping(method = RequestMethod.GET, value = "/it/paycheck", produces = MediaType.APPLICATION_JSON_VALUE)
     public Paycheck getPaycheck(
             @ApiParam(value = "Number of additional salaries") @RequestParam(value = "additionalSalaries", defaultValue = "0") int additionalSalaries,
-            @ApiParam(value = "Gross income per year") @RequestParam(value = "grossIncome", defaultValue = "0") BigDecimal grossIncome,
-            @ApiParam(value = "Net bonus per year") @RequestParam(value = "netBonus", defaultValue = "0") BigDecimal netBonus) {
+            @ApiParam(value = "Gross income per year") @RequestParam(value = "grossIncome", defaultValue = "0") double grossIncome,
+            @ApiParam(value = "Net bonus per year") @RequestParam(value = "netBonus", defaultValue = "0") double netBonus) {
         return new PaycheckBuilder()
                 .setAdditionalSalaries(additionalSalaries)
                 .setGrossIncome(grossIncome)

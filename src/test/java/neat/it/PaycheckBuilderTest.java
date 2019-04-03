@@ -19,8 +19,8 @@ public class PaycheckBuilderTest {
     public void buildPaycheckWithNumericalAdditionalSalaries(int input, BigDecimal expected) {
         Paycheck paycheck = new PaycheckBuilder()
                 .setAdditionalSalaries(input)
-                .setGrossIncome(new BigDecimal(100000))
-                .setNetBonus(BigDecimal.ZERO)
+                .setGrossIncome(100000)
+                .setNetBonus(0)
                 .build();
         Assert.assertThat(paycheck.getNetIncome(), is(expected));
     }
@@ -37,23 +37,13 @@ public class PaycheckBuilderTest {
             "27999.00, 1669", "28000.00, 1669", "28001.00, 1669", "41500.00, 2209",
             "54999.00, 2774", "55000.00, 2774", "55001.00, 2774", "65000.00, 3194",
             "74999.00, 3618", "75000.00, 3618", "75001.00, 3618", "87500.00, 4139"})
-    public void buildPaycheckWithNumericalGrossIncome(BigDecimal input, BigDecimal expected) {
+    public void buildPaycheckWithNumericalGrossIncome(double input, BigDecimal expected) {
         Paycheck paycheck = new PaycheckBuilder()
                 .setAdditionalSalaries(0)
                 .setGrossIncome(input)
-                .setNetBonus(BigDecimal.ZERO)
+                .setNetBonus(0)
                 .build();
         Assert.assertThat(paycheck.getNetIncome(), is(expected));
-    }
-
-    @Test
-    public void buildPaycheckWithNullGrossIncome() {
-        Paycheck paycheck = new PaycheckBuilder()
-                .setAdditionalSalaries(0)
-                .setGrossIncome(null)
-                .setNetBonus(BigDecimal.ZERO)
-                .build();
-        Assert.assertThat(paycheck.getNetIncome(), is(BigDecimal.ZERO));
     }
 
 }
