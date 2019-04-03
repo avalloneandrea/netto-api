@@ -4,36 +4,47 @@ import neat.domain.Paycheck;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.math.RoundingMode;
 
 public class PaycheckBuilder {
 
     private static final BigDecimal NO_TAX_AREA = new BigDecimal(8174);
 
-    private final BigDecimal grossIncome;
-    private final BigDecimal numOfSalaries;
-    private final BigDecimal netBonus;
+    private BigDecimal additionalSalaries;
+    private BigDecimal grossIncome;
+    private BigDecimal netBonus;
 
-    private final BigDecimal socialTax;
-    private final BigDecimal taxableIncome;
-    private final BigDecimal stateTax;
-    private final BigDecimal federalTax;
-    private final BigDecimal localTax;
-    private final BigDecimal salaryCredit1;
-    private final BigDecimal salaryCredit2;
-    private final BigDecimal netIncome;
+    private BigDecimal socialTax;
+    private BigDecimal taxableIncome;
+    private BigDecimal stateTax;
+    private BigDecimal federalTax;
+    private BigDecimal localTax;
+    private BigDecimal salaryCredit1;
+    private BigDecimal salaryCredit2;
+    private BigDecimal numOfSalaries;
+    private BigDecimal netIncome;
 
     public PaycheckBuilder() {
-        this(BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
+        this.additionalSalaries = BigDecimal.ZERO;
+        this.grossIncome = BigDecimal.ZERO;
+        this.netBonus = BigDecimal.ZERO;
     }
 
-    public PaycheckBuilder(BigDecimal grossIncome, BigDecimal additionalSalaries, BigDecimal netBonus) {
+    public PaycheckBuilder setAdditionalSalaries(int additionalSalaries) {
+        this.additionalSalaries = new BigDecimal(Math.max(additionalSalaries, 0));
+        return this;
+    }
 
+    public PaycheckBuilder setGrossIncome(BigDecimal grossIncome) {
         this.grossIncome = valueOrZero(grossIncome);
-        this.numOfSalaries = valueOrZero(additionalSalaries)
-                .setScale(0, RoundingMode.DOWN)
-                .add(new BigDecimal(12));
+        return this;
+    }
+
+    public PaycheckBuilder setNetBonus(BigDecimal netBonus) {
         this.netBonus = valueOrZero(netBonus);
+        return this;
+    }
+
+    public Paycheck build() {
 
         this.socialTax = getSocialTax();
         this.taxableIncome = getTaxableIncome();
@@ -42,28 +53,21 @@ public class PaycheckBuilder {
         this.localTax = getLocalTax();
         this.salaryCredit1 = getSalaryCredit1();
         this.salaryCredit2 = getSalaryCredit2();
+        this.numOfSalaries = getNumOfSalaries();
         this.netIncome = getNetIncome();
 
-    }
-
-    private BigDecimal valueOrZero(BigDecimal value) {
-
-        if (value == null || value.compareTo(BigDecimal.ZERO) <= 0)
-            return BigDecimal.ZERO;
-
-        else // if (value.compareTo(BigDecimal.ZERO) > 0)
-            return value;
+        Paycheck paycheck = new Paycheck();
+        paycheck.setGrossIncome(grossIncome);
+        paycheck.setNetIncome(netIncome);
+        return paycheck;
 
     }
 
     private BigDecimal getSocialTax() {
-
         if (grossIncome.compareTo(BigDecimal.ZERO) <= 0)
             return BigDecimal.ZERO;
-
         else // if (grossIncome.compareTo(BigDecimal.ZERO) > 0)
             return grossIncome.multiply(new BigDecimal(0.0919));
-
     }
 
     private BigDecimal getTaxableIncome() {
@@ -105,23 +109,17 @@ public class PaycheckBuilder {
     }
 
     private BigDecimal getFederalTax() {
-
         if (taxableIncome.compareTo(NO_TAX_AREA) <= 0)
             return BigDecimal.ZERO;
-
         else // if (taxableIncome.compareTo(NO_TAX_AREA) > 0)
             return taxableIncome.multiply(new BigDecimal(0.0203));
-
     }
 
     private BigDecimal getLocalTax() {
-
         if (taxableIncome.compareTo(NO_TAX_AREA) <= 0)
             return BigDecimal.ZERO;
-
         else // if (taxableIncome.compareTo(NO_TAX_AREA) > 0)
             return taxableIncome.multiply(new BigDecimal(0.008));
-
     }
 
     private BigDecimal getSalaryCredit1() {
@@ -166,6 +164,10 @@ public class PaycheckBuilder {
 
     }
 
+    private BigDecimal getNumOfSalaries() {
+        return additionalSalaries.add(new BigDecimal(12));
+    }
+
     private BigDecimal getNetIncome() {
 
         BigDecimal paycheckGrossIncome = grossIncome.divide(numOfSalaries, MathContext.DECIMAL128);
@@ -188,11 +190,11 @@ public class PaycheckBuilder {
 
     }
 
-    public Paycheck build() {
-        Paycheck paycheck = new Paycheck();
-        paycheck.setGrossIncome(grossIncome);
-        paycheck.setNetIncome(netIncome);
-        return paycheck;
+    private BigDecimal valueOrZero(BigDecimal value) {
+        if (value == null || value.compareTo(BigDecimal.ZERO) <= 0)
+            return BigDecimal.ZERO;
+        else // if (value.compareTo(BigDecimal.ZERO) > 0)
+            return value;
     }
 
 }

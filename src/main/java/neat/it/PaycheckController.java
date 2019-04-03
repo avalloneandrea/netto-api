@@ -19,10 +19,14 @@ public class PaycheckController {
     @ApiOperation(value = "Get the paycheck given the gross income")
     @RequestMapping(method = RequestMethod.GET, value = "/it/paycheck", produces = MediaType.APPLICATION_JSON_VALUE)
     public Paycheck getPaycheck(
+            @ApiParam(value = "Number of additional salaries") @RequestParam(value = "additionalSalaries", defaultValue = "0") int additionalSalaries,
             @ApiParam(value = "Gross income per year") @RequestParam(value = "grossIncome", defaultValue = "0") BigDecimal grossIncome,
-            @ApiParam(value = "Number of additional salaries") @RequestParam(value = "additionalSalaries", defaultValue = "0") BigDecimal additionalSalaries,
             @ApiParam(value = "Net bonus per year") @RequestParam(value = "netBonus", defaultValue = "0") BigDecimal netBonus) {
-        return new PaycheckBuilder(grossIncome, additionalSalaries, netBonus).build();
+        return new PaycheckBuilder()
+                .setAdditionalSalaries(additionalSalaries)
+                .setGrossIncome(grossIncome)
+                .setNetBonus(netBonus)
+                .build();
     }
 
 }

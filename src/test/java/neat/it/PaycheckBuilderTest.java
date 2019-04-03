@@ -9,59 +9,51 @@ import org.junit.runner.RunWith;
 
 import java.math.BigDecimal;
 
+import static org.hamcrest.core.Is.is;
+
 @RunWith(JUnitParamsRunner.class)
 public class PaycheckBuilderTest {
 
     @Test
-    @Parameters({
-            "-75000, 0", "-50000, 0", "-25000, 0",
-            "-1, 0", "0, 0", "1, 0",
-            "2043.50, 155", "4087, 309", "6130.50, 464",
-            "8173, 618", "8174, 619", "8175, 619",
-            "9880.50, 786", "11587, 875", "13293.50, 965",
-            "14999, 1054", "15000, 1055", "15001, 1055",
-            "17400, 1178", "19800, 1297", "22200, 1415",
-            "24599, 1534", "24600, 1534", "24601, 1534",
-            "25100, 1559", "25600, 1584", "26100, 1609",
-            "26599, 1633", "26600, 1633", "26601, 1633",
-            "26950, 1651", "27300, 1660", "27650, 1665",
-            "27999, 1669", "28000, 1669", "28001, 1669",
-            "34750, 1927", "41500, 2209", "48250, 2492",
-            "54999, 2774", "55000, 2774", "55001, 2774",
-            "60000, 2983", "65000, 3194", "70000, 3406",
-            "74999, 3618", "75000, 3618", "75001, 3618",
-            "81250, 3882", "87500, 4139", "93750, 4394"
-    })
-    public void buildPaycheckOnNumericalGrossIncome(BigDecimal input, BigDecimal expected) {
-        PaycheckBuilder paycheckBuilder = new PaycheckBuilder(input, BigDecimal.ZERO, BigDecimal.ZERO);
-        Paycheck paycheck = paycheckBuilder.build();
-        Assert.assertEquals(expected, paycheck.getNetIncome());
-    }
-
-    @Test
-    public void buildPaycheckOnNullGrossIncome() {
-        PaycheckBuilder paycheckBuilder = new PaycheckBuilder(null, BigDecimal.ZERO, BigDecimal.ZERO);
-        Paycheck paycheck = paycheckBuilder.build();
-        Assert.assertEquals(BigDecimal.ZERO, paycheck.getNetIncome());
+    @Parameters({"-2, 4649", "-1, 4649", "0, 4649", "1, 4273", "2, 3951"})
+    public void buildPaycheckWithNumericalAdditionalSalaries(int input, BigDecimal expected) {
+        Paycheck paycheck = new PaycheckBuilder()
+                .setAdditionalSalaries(input)
+                .setGrossIncome(new BigDecimal(100000))
+                .setNetBonus(BigDecimal.ZERO)
+                .build();
+        Assert.assertThat(paycheck.getNetIncome(), is(expected));
     }
 
     @Test
     @Parameters({
-            "-3, 4649", "-2, 4649", "-1, 4649",
-            "-0.5, 4649", "0, 4649", "0.5, 4649",
-            "1, 4273", "2, 3951", "3, 3672"
-    })
-    public void buildPaycheckOnNumericalAdditionalSalaries(BigDecimal input, BigDecimal expected) {
-        PaycheckBuilder paycheckBuilder = new PaycheckBuilder(new BigDecimal(100000), input, BigDecimal.ZERO);
-        Paycheck paycheck = paycheckBuilder.build();
-        Assert.assertEquals(expected, paycheck.getNetIncome());
+            "-9999.00,    0", "-9998.00,    0", "-9997.00,    0", "-9996.00,    0",
+            "   -1.00,    0", "    0.00,    0", "    1.00,    0", " 4087.00,  309",
+            " 5279.10,  399", " 5279.20,  400", " 5292.30,  400", " 5292.40,  401",
+            " 8173.00,  618", " 8174.00,  619", " 8175.00,  619", "11587.00,  875",
+            "14999.00, 1054", "15000.00, 1055", "15001.00, 1055", "19800.00, 1297",
+            "24599.00, 1534", "24600.00, 1534", "24601.00, 1534", "25600.00, 1584",
+            "26599.00, 1633", "26600.00, 1633", "26601.00, 1633", "27300.00, 1660",
+            "27999.00, 1669", "28000.00, 1669", "28001.00, 1669", "41500.00, 2209",
+            "54999.00, 2774", "55000.00, 2774", "55001.00, 2774", "65000.00, 3194",
+            "74999.00, 3618", "75000.00, 3618", "75001.00, 3618", "87500.00, 4139"})
+    public void buildPaycheckWithNumericalGrossIncome(BigDecimal input, BigDecimal expected) {
+        Paycheck paycheck = new PaycheckBuilder()
+                .setAdditionalSalaries(0)
+                .setGrossIncome(input)
+                .setNetBonus(BigDecimal.ZERO)
+                .build();
+        Assert.assertThat(paycheck.getNetIncome(), is(expected));
     }
 
     @Test
-    public void buildPaycheckOnNullAdditionalSalaries() {
-        PaycheckBuilder paycheckBuilder = new PaycheckBuilder(new BigDecimal(100000), null, BigDecimal.ZERO);
-        Paycheck paycheck = paycheckBuilder.build();
-        Assert.assertEquals(new BigDecimal("4649"), paycheck.getNetIncome());
+    public void buildPaycheckWithNullGrossIncome() {
+        Paycheck paycheck = new PaycheckBuilder()
+                .setAdditionalSalaries(0)
+                .setGrossIncome(null)
+                .setNetBonus(BigDecimal.ZERO)
+                .build();
+        Assert.assertThat(paycheck.getNetIncome(), is(BigDecimal.ZERO));
     }
 
 }
