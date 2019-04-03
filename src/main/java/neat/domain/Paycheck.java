@@ -9,28 +9,26 @@ public class Paycheck {
     private BigDecimal netIncome;
 
     public Paycheck() {
-        this(BigDecimal.ZERO, BigDecimal.ZERO);
-    }
-
-    public Paycheck(BigDecimal grossIncome, BigDecimal netIncome) {
-        this.grossIncome = grossIncome;
-        this.netIncome = netIncome;
+        this.grossIncome = BigDecimal.ZERO;
+        this.netIncome = BigDecimal.ZERO;
     }
 
     public BigDecimal getGrossIncome() {
         return grossIncome.setScale(0, RoundingMode.HALF_EVEN);
     }
 
-    public void setGrossIncome(BigDecimal grossIncome) {
-        this.grossIncome = grossIncome;
+    public Paycheck setGrossIncome(BigDecimal grossIncome) {
+        this.grossIncome = grossIncome != null ? grossIncome : BigDecimal.ZERO;
+        return this;
     }
 
     public BigDecimal getNetIncome() {
         return netIncome.setScale(0, RoundingMode.HALF_EVEN);
     }
 
-    public void setNetIncome(BigDecimal netIncome) {
-        this.netIncome = netIncome;
+    public Paycheck setNetIncome(BigDecimal netIncome) {
+        this.netIncome = netIncome != null ? netIncome : BigDecimal.ZERO;
+        return this;
     }
 
 }

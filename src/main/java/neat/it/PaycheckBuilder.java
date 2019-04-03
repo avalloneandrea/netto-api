@@ -180,10 +180,9 @@ public class PaycheckBuilder {
     }
 
     private Paycheck getPaycheck() {
-        Paycheck paycheck = new Paycheck();
-        paycheck.setGrossIncome(grossIncome);
-        paycheck.setNetIncome(netIncome);
-        return paycheck;
+        return new Paycheck()
+                .setGrossIncome(grossIncome)
+                .setNetIncome(netIncome);
     }
 
 }
