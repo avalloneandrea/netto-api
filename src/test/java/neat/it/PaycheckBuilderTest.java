@@ -1,32 +1,29 @@
 package neat.it;
 
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
 import neat.domain.Paycheck;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.math.BigDecimal;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-@RunWith(JUnitParamsRunner.class)
 public class PaycheckBuilderTest {
 
-    @Test
-    @Parameters({"-2, 1307", "-1, 1307", "0, 1307", "1, 1218", "2, 1142"})
-    public void buildPaycheckWithNumericalAdditionalSalaries(int input, BigDecimal expected) {
+    @ParameterizedTest
+    @CsvSource({"-2, 1307", "-1, 1307", "0, 1307", "1, 1218", "2, 1142"})
+    public void buildPaycheckWithParameterizedAdditionalSalaries(int input, BigDecimal expected) {
         Paycheck paycheck = new PaycheckBuilder()
                 .setAdditionalSalaries(input)
                 .setGrossIncome(20000)
                 .setNetBonus(0)
                 .build();
-        Assert.assertThat(paycheck.getNetIncome(), is(expected));
+        assertThat(paycheck.getNetIncome(), is(expected));
     }
 
-    @Test
-    @Parameters({
+    @ParameterizedTest
+    @CsvSource({
             "-9999.00, 0", "-1.00, 0", "0.00, 0", "1.00, 0", "4087.00, 309",
             "5279.10, 399", "5279.20, 400", "5292.30, 400", "5292.40, 401",
             "8173.00, 618", "8174.00, 619", "8175.00, 619", "11587.00, 875",
@@ -36,26 +33,26 @@ public class PaycheckBuilderTest {
             "27999.00, 1669", "28000.00, 1669", "28001.00, 1669", "41500.00, 2209",
             "54999.00, 2774", "55000.00, 2774", "55001.00, 2774", "65000.00, 3194",
             "74999.00, 3618", "75000.00, 3618", "75001.00, 3618", "87500.00, 4139"})
-    public void buildPaycheckWithNumericalGrossIncome(double input, BigDecimal expected) {
+    public void buildPaycheckWithParameterizedGrossIncome(double input, BigDecimal expected) {
         Paycheck paycheck = new PaycheckBuilder()
                 .setAdditionalSalaries(0)
                 .setGrossIncome(input)
                 .setNetBonus(0)
                 .build();
-        Assert.assertThat(paycheck.getNetIncome(), is(expected));
+        assertThat(paycheck.getNetIncome(), is(expected));
     }
 
-    @Test
-    @Parameters({
+    @ParameterizedTest
+    @CsvSource({
             "-9999.00, 1307", "-1.00, 1307", "0.00, 1307", "1.00, 1307", "600.00, 1357",
             "814.70, 1374", "814.80, 1375", "826.70, 1375", "826.80, 1376"})
-    public void buildPaycheckWithNumericalNetBonus(double input, BigDecimal expected) {
+    public void buildPaycheckWithParameterizedNetBonus(double input, BigDecimal expected) {
         Paycheck paycheck = new PaycheckBuilder()
                 .setAdditionalSalaries(0)
                 .setGrossIncome(20000)
                 .setNetBonus(input)
                 .build();
-        Assert.assertThat(paycheck.getNetIncome(), is(expected));
+        assertThat(paycheck.getNetIncome(), is(expected));
     }
 
 }
