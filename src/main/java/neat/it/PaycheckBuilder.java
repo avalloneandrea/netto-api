@@ -158,15 +158,17 @@ public class PaycheckBuilder {
 
     private BigDecimal getNetIncome() {
 
-        BigDecimal numOfSalaries = additionalSalaries.add(new BigDecimal(12));
+        BigDecimal numOfMonths = new BigDecimal(12);
+        BigDecimal numOfSalaries = numOfMonths.add(additionalSalaries);
+
         BigDecimal paycheckGrossIncome = grossIncome.divide(numOfSalaries, MathContext.DECIMAL128);
         BigDecimal paycheckSocialTax = socialTax.divide(numOfSalaries, MathContext.DECIMAL128);
         BigDecimal paycheckStateTax = stateTax.divide(numOfSalaries, MathContext.DECIMAL128);
-        BigDecimal paycheckFederalTax = federalTax.divide(new BigDecimal(11), MathContext.DECIMAL128);
-        BigDecimal paycheckLocalTax = localTax.divide(new BigDecimal(11), MathContext.DECIMAL128);
-        BigDecimal paycheckSalaryCredit1 = salaryCredit1.divide(new BigDecimal(12), MathContext.DECIMAL128);
-        BigDecimal paycheckSalaryCredit2 = salaryCredit2.divide(new BigDecimal(12), MathContext.DECIMAL128);
-        BigDecimal paycheckNetBonus = netBonus.divide(new BigDecimal(12), MathContext.DECIMAL128);
+        BigDecimal paycheckFederalTax = federalTax.divide(numOfMonths, MathContext.DECIMAL128);
+        BigDecimal paycheckLocalTax = localTax.divide(numOfMonths, MathContext.DECIMAL128);
+        BigDecimal paycheckSalaryCredit1 = salaryCredit1.divide(numOfMonths, MathContext.DECIMAL128);
+        BigDecimal paycheckSalaryCredit2 = salaryCredit2.divide(numOfMonths, MathContext.DECIMAL128);
+        BigDecimal paycheckNetBonus = netBonus.divide(numOfMonths, MathContext.DECIMAL128);
 
         return paycheckGrossIncome
                 .subtract(paycheckSocialTax)
