@@ -18,12 +18,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class PaycheckControllerTest {
 
     @Autowired
-    private MockMvc mockMvc;
+    private MockMvc webEnvironment;
 
     @ParameterizedTest
     @CsvSource({"-1", "0", "1"})
     public void getPaycheckWithValidAdditionalSalaries(int input) throws Exception {
-        this.mockMvc
+        this.webEnvironment
                 .perform(get("/it/paycheck?additionalSalaries=" + input))
                 .andExpect(status().is2xxSuccessful());
     }
@@ -31,15 +31,15 @@ public class PaycheckControllerTest {
     @ParameterizedTest
     @CsvSource({"1.5", "two"})
     public void getPaycheckWithInvalidAdditionalSalaries(String input) throws Exception {
-        this.mockMvc
+        this.webEnvironment
                 .perform(get("/it/paycheck?additionalSalaries=" + input))
                 .andExpect(status().is4xxClientError());
     }
 
     @ParameterizedTest
-    @CsvSource({"-20000.00", "0", "20000.00", "20000.50"})
+    @CsvSource({"-20000.00", "0", "20000.00", "23456.78"})
     public void getPaycheckWithValidGrossIncome(BigDecimal input) throws Exception {
-        this.mockMvc
+        this.webEnvironment
                 .perform(get("/it/paycheck?grossIncome=" + input))
                 .andExpect(status().is2xxSuccessful());
     }
@@ -47,15 +47,15 @@ public class PaycheckControllerTest {
     @ParameterizedTest
     @CsvSource({"twentythousand"})
     public void getPaycheckWithInvalidGrossIncome(String input) throws Exception {
-        this.mockMvc
+        this.webEnvironment
                 .perform(get("/it/paycheck?grossIncome=" + input))
                 .andExpect(status().is4xxClientError());
     }
 
     @ParameterizedTest
-    @CsvSource({"-600.00", "0", "600.00", "600.50"})
+    @CsvSource({"-600.00", "0", "600.00", "678.99"})
     public void getPaycheckWithValidNetBonus(BigDecimal input) throws Exception {
-        this.mockMvc
+        this.webEnvironment
                 .perform(get("/it/paycheck?netBonus=" + input))
                 .andExpect(status().is2xxSuccessful());
     }
@@ -63,7 +63,7 @@ public class PaycheckControllerTest {
     @ParameterizedTest
     @CsvSource({"sixhundred"})
     public void getPaycheckWithInvalidNetBonus(String input) throws Exception {
-        this.mockMvc
+        this.webEnvironment
                 .perform(get("/it/paycheck?netBonus=" + input))
                 .andExpect(status().is4xxClientError());
     }

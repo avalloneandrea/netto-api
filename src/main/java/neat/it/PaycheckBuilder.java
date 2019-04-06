@@ -7,14 +7,13 @@ import java.math.MathContext;
 
 public class PaycheckBuilder {
 
-    private static final BigDecimal NO_TAX_AREA = new BigDecimal(8174);
-
     private BigDecimal additionalSalaries;
     private BigDecimal grossIncome;
     private BigDecimal netBonus;
 
     private BigDecimal socialTax;
     private BigDecimal taxableIncome;
+    private BigDecimal noTaxArea;
     private BigDecimal stateTax;
     private BigDecimal federalTax;
     private BigDecimal localTax;
@@ -44,31 +43,37 @@ public class PaycheckBuilder {
     }
 
     public Paycheck build() {
-        this.socialTax = getSocialTax();
-        this.taxableIncome = getTaxableIncome();
-        this.stateTax = getStateTax();
-        this.federalTax = getFederalTax();
-        this.localTax = getLocalTax();
-        this.salaryCredit1 = getSalaryCredit1();
-        this.salaryCredit2 = getSalaryCredit2();
-        this.netIncome = getNetIncome();
-        return getPaycheck();
+        this.socialTax = socialTax();
+        this.taxableIncome = taxableIncome();
+        this.noTaxArea = noTaxArea();
+        this.stateTax = stateTax();
+        this.federalTax = federalTax();
+        this.localTax = localTax();
+        this.salaryCredit1 = salaryCredit1();
+        this.salaryCredit2 = salaryCredit2();
+        this.netIncome = netIncome();
+        return paycheck();
     }
 
-    private BigDecimal getSocialTax() {
+
+    private BigDecimal socialTax() {
         if (grossIncome.compareTo(BigDecimal.ZERO) <= 0)
             return BigDecimal.ZERO;
         else // if (grossIncome.compareTo(BigDecimal.ZERO) > 0)
             return grossIncome.multiply(new BigDecimal(0.0919));
     }
 
-    private BigDecimal getTaxableIncome() {
+    private BigDecimal taxableIncome() {
         return grossIncome.subtract(socialTax);
     }
 
-    private BigDecimal getStateTax() {
+    private BigDecimal noTaxArea() {
+        return new BigDecimal(8174);
+    }
 
-        if (taxableIncome.compareTo(NO_TAX_AREA) <= 0)
+    private BigDecimal stateTax() {
+
+        if (taxableIncome.compareTo(noTaxArea) <= 0)
             return BigDecimal.ZERO;
 
         else if (taxableIncome.compareTo(new BigDecimal(15000)) <= 0)
@@ -100,23 +105,23 @@ public class PaycheckBuilder {
 
     }
 
-    private BigDecimal getFederalTax() {
-        if (taxableIncome.compareTo(NO_TAX_AREA) <= 0)
+    private BigDecimal federalTax() {
+        if (taxableIncome.compareTo(noTaxArea) <= 0)
             return BigDecimal.ZERO;
-        else // if (taxableIncome.compareTo(NO_TAX_AREA) > 0)
+        else // if (taxableIncome.compareTo(noTaxArea) > 0)
             return taxableIncome.multiply(new BigDecimal(0.0203));
     }
 
-    private BigDecimal getLocalTax() {
-        if (taxableIncome.compareTo(NO_TAX_AREA) <= 0)
+    private BigDecimal localTax() {
+        if (taxableIncome.compareTo(noTaxArea) <= 0)
             return BigDecimal.ZERO;
-        else // if (taxableIncome.compareTo(NO_TAX_AREA) > 0)
+        else // if (taxableIncome.compareTo(noTaxArea) > 0)
             return taxableIncome.multiply(new BigDecimal(0.008));
     }
 
-    private BigDecimal getSalaryCredit1() {
+    private BigDecimal salaryCredit1() {
 
-        if (taxableIncome.compareTo(NO_TAX_AREA) <= 0)
+        if (taxableIncome.compareTo(noTaxArea) <= 0)
             return BigDecimal.ZERO;
 
         else if (taxableIncome.compareTo(new BigDecimal(28000)) <= 0)
@@ -137,9 +142,9 @@ public class PaycheckBuilder {
 
     }
 
-    private BigDecimal getSalaryCredit2() {
+    private BigDecimal salaryCredit2() {
 
-        if (taxableIncome.compareTo(NO_TAX_AREA) <= 0)
+        if (taxableIncome.compareTo(noTaxArea) <= 0)
             return BigDecimal.ZERO;
 
         else if (taxableIncome.compareTo(new BigDecimal(24600)) <= 0)
@@ -156,7 +161,7 @@ public class PaycheckBuilder {
 
     }
 
-    private BigDecimal getNetIncome() {
+    private BigDecimal netIncome() {
 
         BigDecimal numOfMonths = new BigDecimal(12);
         BigDecimal numOfSalaries = numOfMonths.add(additionalSalaries);
@@ -181,7 +186,7 @@ public class PaycheckBuilder {
 
     }
 
-    private Paycheck getPaycheck() {
+    private Paycheck paycheck() {
         return new Paycheck()
                 .setGrossIncome(grossIncome)
                 .setNetIncome(netIncome);

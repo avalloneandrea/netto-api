@@ -13,9 +13,9 @@ public class PaycheckTest {
 
     @ParameterizedTest
     @CsvSource({
-            "-9999.00, -9999", "-1.00, -1", "0.00, 0", "1.00, 1",
+            "-20000.00, -20000", "-1.00, -1", "0.00, 0", "1.00, 1",
             "20000.00, 20000", "20000.25, 20000", "20000.50, 20000", "20000.75, 20001"})
-    public void getAndSetGrossIncomeWithParameterizedValue(BigDecimal input, BigDecimal expected) {
+    public void getAndSetGrossIncomeWithValidValue(BigDecimal input, BigDecimal expected) {
         Paycheck paycheck = new Paycheck();
         paycheck.setGrossIncome(input);
         assertThat(paycheck.getGrossIncome(), is(expected));
@@ -30,9 +30,9 @@ public class PaycheckTest {
 
     @ParameterizedTest
     @CsvSource({
-            "-9999.00, -9999", "-1.00, -1", "0.00, 0", "1.00, 1",
+            "-1200.00, -1200", "-1.00, -1", "0.00, 0", "1.00, 1",
             "1200.00, 1200", "1200.25, 1200", "1200.50, 1200", "1200.75, 1201"})
-    public void getAndSetNetIncomeWithParameterizedValue(BigDecimal input, BigDecimal expected) {
+    public void getAndSetNetIncomeWithValidValue(BigDecimal input, BigDecimal expected) {
         Paycheck paycheck = new Paycheck();
         paycheck.setNetIncome(input);
         assertThat(paycheck.getNetIncome(), is(expected));
