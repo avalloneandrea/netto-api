@@ -5,7 +5,7 @@
 
     <groupId>neat-api</groupId>
     <artifactId>neat-api</artifactId>
-    <version>1.0.17</version>
+    <version>1.0.18</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -61,6 +61,11 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.3</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*Application**</exclude>
+                    </excludes>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
