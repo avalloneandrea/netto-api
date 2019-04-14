@@ -5,13 +5,11 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import neat.domain.Paycheck;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-@RestController
 @Api(tags = "Italy", description = "Operations about italian paychecks")
+@RestController
+@CrossOrigin
 public class PaycheckController {
 
     @ApiOperation(value = "Get the paycheck given the income")
