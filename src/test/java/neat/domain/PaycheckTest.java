@@ -33,30 +33,30 @@ public class PaycheckTest {
     @CsvSource({"-300.00, -300.00", "-1.00, -1.00", "0.00, 0.00", "1.00, 1.00", "300.00, 300.00"})
     public void getAndSetTaxesWithValidValue(BigDecimal input, BigDecimal expected) {
         Paycheck paycheck = new Paycheck();
-        paycheck.setTaxes(Collections.singletonMap("", input));
-        assertThat(paycheck.getTaxes().values().stream().findFirst().orElse(null), is(expected));
+        paycheck.setTaxes(Collections.singletonList(new Item().setAmount(input)));
+        assertThat(paycheck.getTaxes().stream().findFirst().map(Item::getAmount).orElse(null), is(expected));
     }
 
     @Test
     public void getAndSetTaxesWithNullValue() {
         Paycheck paycheck = new Paycheck();
         paycheck.setTaxes(null);
-        assertThat(paycheck.getTaxes().values(), is(empty()));
+        assertThat(paycheck.getTaxes(), is(empty()));
     }
 
     @ParameterizedTest
     @CsvSource({"-300.00, -300.00", "-1.00, -1.00", "0.00, 0.00", "1.00, 1.00", "300.00, 300.00"})
     public void getAndSetCreditsWithValidValue(BigDecimal input, BigDecimal expected) {
         Paycheck paycheck = new Paycheck();
-        paycheck.setCredits(Collections.singletonMap("", input));
-        assertThat(paycheck.getCredits().values().stream().findFirst().orElse(null), is(expected));
+        paycheck.setCredits(Collections.singletonList(new Item().setAmount(input)));
+        assertThat(paycheck.getCredits().stream().findFirst().map(Item::getAmount).orElse(null), is(expected));
     }
 
     @Test
     public void getAndSetCreditsWithNullValue() {
         Paycheck paycheck = new Paycheck();
         paycheck.setCredits(null);
-        assertThat(paycheck.getCredits().values(), is(empty()));
+        assertThat(paycheck.getCredits(), is(empty()));
     }
 
     @ParameterizedTest

@@ -1,5 +1,6 @@
 package neat.it;
 
+import neat.domain.Item;
 import neat.domain.Paycheck;
 
 import java.math.BigDecimal;
@@ -160,33 +161,33 @@ public class PaycheckBuilder {
         BigDecimal numOfMonths = new BigDecimal(12);
         BigDecimal numOfSalaries = numOfMonths.add(additionalSalaries);
 
-        BigDecimal paycheckGrossIncome = grossIncome.divide(numOfSalaries, MathContext.DECIMAL128);
-        BigDecimal paycheckSocialTax = socialTax.divide(numOfSalaries, MathContext.DECIMAL128);
-        BigDecimal paycheckStateTax = stateTax.divide(numOfSalaries, MathContext.DECIMAL128);
-        BigDecimal paycheckFederalTax = federalTax.divide(numOfMonths, MathContext.DECIMAL128);
-        BigDecimal paycheckLocalTax = localTax.divide(numOfMonths, MathContext.DECIMAL128);
-        BigDecimal paycheckSalaryCredit = salaryCredit.divide(numOfMonths, MathContext.DECIMAL128);
-        BigDecimal paycheckSalaryCredit2 = salaryCredit2.divide(numOfMonths, MathContext.DECIMAL128);
-        BigDecimal paycheckNetBonus = netBonus.divide(numOfMonths, MathContext.DECIMAL128);
-        BigDecimal paycheckNetIncome = paycheckGrossIncome
-                .subtract(paycheckSocialTax)
-                .subtract(paycheckStateTax)
-                .subtract(paycheckFederalTax)
-                .subtract(paycheckLocalTax)
-                .add(paycheckSalaryCredit)
-                .add(paycheckSalaryCredit2)
-                .add(paycheckNetBonus);
+        BigDecimal grossIncome = this.grossIncome.divide(numOfSalaries, MathContext.DECIMAL128);
+        BigDecimal socialTax = this.socialTax.divide(numOfSalaries, MathContext.DECIMAL128);
+        BigDecimal stateTax = this.stateTax.divide(numOfSalaries, MathContext.DECIMAL128);
+        BigDecimal federalTax = this.federalTax.divide(numOfMonths, MathContext.DECIMAL128);
+        BigDecimal localTax = this.localTax.divide(numOfMonths, MathContext.DECIMAL128);
+        BigDecimal salaryCredit = this.salaryCredit.divide(numOfMonths, MathContext.DECIMAL128);
+        BigDecimal salaryCredit2 = this.salaryCredit2.divide(numOfMonths, MathContext.DECIMAL128);
+        BigDecimal netBonus = this.netBonus.divide(numOfMonths, MathContext.DECIMAL128);
+        BigDecimal netIncome = grossIncome
+                .subtract(socialTax)
+                .subtract(stateTax)
+                .subtract(federalTax)
+                .subtract(localTax)
+                .add(salaryCredit)
+                .add(salaryCredit2)
+                .add(netBonus);
 
         return new Paycheck()
-                .setGrossIncome(paycheckGrossIncome)
-                .setTax("SocialTax", paycheckSocialTax)
-                .setTax("StateTax", paycheckStateTax)
-                .setTax("FederalTax", paycheckFederalTax)
-                .setTax("LocalTax", paycheckLocalTax)
-                .setCredit("SalaryCredit", paycheckSalaryCredit)
-                .setCredit("SalaryCredit2", paycheckSalaryCredit2)
-                .setCredit("NetBonus", paycheckNetBonus)
-                .setNetIncome(paycheckNetIncome);
+                .setGrossIncome(grossIncome)
+                .addTaxes(new Item().setCode("Social tax").setAmount(socialTax))
+                .addTaxes(new Item().setCode("State tax").setAmount(stateTax))
+                .addTaxes(new Item().setCode("Federal tax").setAmount(federalTax))
+                .addTaxes(new Item().setCode("Local tax").setAmount(localTax))
+                .addCredits(new Item().setCode("Salary credit").setAmount(salaryCredit))
+                .addCredits(new Item().setCode("Salary credit 2").setAmount(salaryCredit2))
+                .addCredits(new Item().setCode("Net bonus").setAmount(netBonus))
+                .setNetIncome(netIncome);
 
     }
 

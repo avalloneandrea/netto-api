@@ -1,20 +1,23 @@
 package neat.domain;
 
 import java.math.BigDecimal;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.apache.commons.lang3.ObjectUtils.defaultIfNull;
 
 public class Paycheck {
 
     private BigDecimal grossIncome;
-    private Map<String, BigDecimal> taxes;
-    private Map<String, BigDecimal> credits;
+    private List<Item> taxes;
+    private List<Item> credits;
     private BigDecimal netIncome;
 
     public Paycheck() {
         this.grossIncome = BigDecimal.ZERO;
-        this.taxes = new LinkedHashMap<>();
-        this.credits = new LinkedHashMap<>();
+        this.taxes = new ArrayList<>();
+        this.credits = new ArrayList<>();
         this.netIncome = BigDecimal.ZERO;
     }
 
@@ -27,31 +30,31 @@ public class Paycheck {
         return this;
     }
 
-    public Map<String, BigDecimal> getTaxes() {
+    public List<Item> getTaxes() {
         return taxes;
     }
 
-    public Paycheck setTaxes(Map<String, BigDecimal> taxes) {
-        this.taxes = defaultIfNull(taxes, new LinkedHashMap<>());
+    public Paycheck setTaxes(List<Item> taxes) {
+        this.taxes = defaultIfNull(taxes, new ArrayList<>());
         return this;
     }
 
-    public Paycheck setTax(String key, BigDecimal value) {
-        this.taxes.put(defaultIfNull(key, ""), defaultIfNull(value, BigDecimal.ZERO));
+    public Paycheck addTaxes(Item... taxes) {
+        this.taxes.addAll(Arrays.asList(taxes));
         return this;
     }
 
-    public Map<String, BigDecimal> getCredits() {
+    public List<Item> getCredits() {
         return credits;
     }
 
-    public Paycheck setCredits(Map<String, BigDecimal> credits) {
-        this.credits = defaultIfNull(credits, new LinkedHashMap<>());
+    public Paycheck setCredits(List<Item> credits) {
+        this.credits = defaultIfNull(credits, new ArrayList<>());
         return this;
     }
 
-    public Paycheck setCredit(String key, BigDecimal value) {
-        this.credits.put(defaultIfNull(key, ""), defaultIfNull(value, BigDecimal.ZERO));
+    public Paycheck addCredits(Item... credits) {
+        this.credits.addAll(Arrays.asList(credits));
         return this;
     }
 
@@ -62,10 +65,6 @@ public class Paycheck {
     public Paycheck setNetIncome(BigDecimal netIncome) {
         this.netIncome = defaultIfNull(netIncome, BigDecimal.ZERO);
         return this;
-    }
-
-    private <T> T defaultIfNull(T object, T defaultValue) {
-        return object != null ? object : defaultValue;
     }
 
 }
