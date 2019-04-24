@@ -180,13 +180,13 @@ public class PaycheckBuilder {
 
         return new Paycheck()
                 .setGrossIncome(grossIncome)
-                .addTaxes(new Item().setCode("Social tax").setAmount(socialTax))
-                .addTaxes(new Item().setCode("State tax").setAmount(stateTax))
-                .addTaxes(new Item().setCode("Federal tax").setAmount(federalTax))
-                .addTaxes(new Item().setCode("Local tax").setAmount(localTax))
-                .addCredits(new Item().setCode("Salary credit").setAmount(salaryCredit))
-                .addCredits(new Item().setCode("Salary credit 2").setAmount(salaryCredit2))
-                .addCredits(new Item().setCode("Net bonus").setAmount(netBonus))
+                .addTaxes(new Item().setCode("Social tax").setValue(socialTax))
+                .addTaxes(new Item().setCode("State tax").setValue(stateTax))
+                .addTaxes(new Item().setCode("Federal tax").setValue(federalTax))
+                .addTaxes(new Item().setCode("Local tax").setValue(localTax))
+                .addCredits(new Item().setCode("Salary credit").setValue(salaryCredit))
+                .addCredits(new Item().setCode("Salary credit 2").setValue(salaryCredit2))
+                .addCredits(new Item().setCode("Net bonus").setValue(netBonus))
                 .setNetIncome(netIncome);
 
     }

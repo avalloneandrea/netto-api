@@ -9,11 +9,11 @@ import static org.apache.commons.lang3.ObjectUtils.defaultIfNull;
 public class Item {
 
     private String code;
-    private BigDecimal amount;
+    private BigDecimal value;
 
     public Item() {
         this.code = Strings.EMPTY;
-        this.amount = BigDecimal.ZERO;
+        this.value = BigDecimal.ZERO;
     }
 
     public String getCode() {
@@ -25,12 +25,12 @@ public class Item {
         return this;
     }
 
-    public BigDecimal getAmount() {
-        return amount;
+    public BigDecimal getValue() {
+        return value;
     }
 
-    public Item setAmount(BigDecimal amount) {
-        this.amount = defaultIfNull(amount, BigDecimal.ZERO);
+    public Item setValue(BigDecimal value) {
+        this.value = defaultIfNull(value, BigDecimal.ZERO);
         return this;
     }
 

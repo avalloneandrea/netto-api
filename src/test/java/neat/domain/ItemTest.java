@@ -29,17 +29,17 @@ public class ItemTest {
 
     @ParameterizedTest
     @CsvSource({"-300.00, -300.00", "-1.00, -1.00", "0.00, 0.00", "1.00, 1.00", "300.00, 300.00"})
-    public void getAndSetNetAmountWithValidValue(BigDecimal input, BigDecimal expected) {
+    public void getAndSetValueWithValidValue(BigDecimal input, BigDecimal expected) {
         Item item = new Item();
-        item.setAmount(input);
-        assertThat(item.getAmount(), is(expected));
+        item.setValue(input);
+        assertThat(item.getValue(), is(expected));
     }
 
     @Test
-    public void getAndSetAmountWithNullValue() {
+    public void getAndSetValueWithNullValue() {
         Item item = new Item();
-        item.setAmount(null);
-        assertThat(item.getAmount(), is(BigDecimal.ZERO));
+        item.setValue(null);
+        assertThat(item.getValue(), is(BigDecimal.ZERO));
     }
 
 }

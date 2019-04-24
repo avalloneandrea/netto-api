@@ -4,6 +4,7 @@ import neat.domain.Paycheck;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -20,7 +21,7 @@ public class PaycheckBuilderTest {
                 .setGrossIncome(20000)
                 .setNetBonus(0)
                 .build();
-        assertThat(paycheck.getNetIncome().setScale(2, RoundingMode.HALF_EVEN), is(expected));
+        assertThat(scaled(paycheck.getNetIncome()), is(expected));
     }
 
     @ParameterizedTest
@@ -39,7 +40,7 @@ public class PaycheckBuilderTest {
                 .setGrossIncome(input)
                 .setNetBonus(0)
                 .build();
-        assertThat(paycheck.getNetIncome().setScale(2, RoundingMode.HALF_EVEN), is(expected));
+        assertThat(scaled(paycheck.getNetIncome()), is(expected));
     }
 
     @ParameterizedTest
@@ -50,7 +51,11 @@ public class PaycheckBuilderTest {
                 .setGrossIncome(20000)
                 .setNetBonus(input)
                 .build();
-        assertThat(paycheck.getNetIncome().setScale(2, RoundingMode.HALF_EVEN), is(expected));
+        assertThat(scaled(paycheck.getNetIncome()), is(expected));
+    }
+
+    private BigDecimal scaled(@NotNull BigDecimal value) {
+        return value.setScale(2, RoundingMode.HALF_EVEN);
     }
 
 }

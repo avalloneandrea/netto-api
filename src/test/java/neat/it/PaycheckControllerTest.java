@@ -1,5 +1,6 @@
 package neat.it;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -37,7 +38,7 @@ public class PaycheckControllerTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"-20000.00", "0", "20000.00", "23456.78"})
+    @CsvSource({"-20000.00", "0", "20000.00"})
     public void getPaycheckWithValidGrossIncome(BigDecimal input) throws Exception {
         this.webEnvironment
                 .perform(get("/it/paycheck?grossIncome=" + input))
@@ -52,8 +53,15 @@ public class PaycheckControllerTest {
                 .andExpect(status().is4xxClientError());
     }
 
+    @Test
+    public void getPaycheckWithNullGrossIncome() throws Exception {
+        this.webEnvironment
+                .perform(get("/it/paycheck?grossIncome="))
+                .andExpect(status().is2xxSuccessful());
+    }
+
     @ParameterizedTest
-    @CsvSource({"-600.00", "0", "600.00", "678.99"})
+    @CsvSource({"-600.00", "0", "600.00"})
     public void getPaycheckWithValidNetBonus(BigDecimal input) throws Exception {
         this.webEnvironment
                 .perform(get("/it/paycheck?netBonus=" + input))
@@ -66,6 +74,14 @@ public class PaycheckControllerTest {
         this.webEnvironment
                 .perform(get("/it/paycheck?netBonus=" + input))
                 .andExpect(status().is4xxClientError());
+    }
+
+    @ParameterizedTest
+    @CsvSource({"-600.00", "0", "600.00"})
+    public void getPaycheckWithNullNetBonus() throws Exception {
+        this.webEnvironment
+                .perform(get("/it/paycheck?netBonus="))
+                .andExpect(status().is2xxSuccessful());
     }
 
 }

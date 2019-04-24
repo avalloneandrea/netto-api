@@ -4,9 +4,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Collections;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
@@ -19,7 +21,7 @@ public class PaycheckTest {
     public void getAndSetGrossIncomeWithValidValue(BigDecimal input, BigDecimal expected) {
         Paycheck paycheck = new Paycheck();
         paycheck.setGrossIncome(input);
-        assertThat(paycheck.getGrossIncome().setScale(2, RoundingMode.HALF_EVEN), is(expected));
+        assertThat(scaled(paycheck.getGrossIncome()), is(expected));
     }
 
     @Test
@@ -33,8 +35,8 @@ public class PaycheckTest {
     @CsvSource({"-300.00, -300.00", "-1.00, -1.00", "0.00, 0.00", "1.00, 1.00", "300.00, 300.00"})
     public void getAndSetTaxesWithValidValue(BigDecimal input, BigDecimal expected) {
         Paycheck paycheck = new Paycheck();
-        paycheck.setTaxes(Collections.singletonList(new Item().setAmount(input)));
-        assertThat(paycheck.getTaxes().stream().findFirst().map(Item::getAmount).orElse(null), is(expected));
+        paycheck.setTaxes(Collections.singletonList(new Item().setValue(input)));
+        assertThat(first(paycheck.getTaxes()), is(expected));
     }
 
     @Test
@@ -48,8 +50,8 @@ public class PaycheckTest {
     @CsvSource({"-300.00, -300.00", "-1.00, -1.00", "0.00, 0.00", "1.00, 1.00", "300.00, 300.00"})
     public void getAndSetCreditsWithValidValue(BigDecimal input, BigDecimal expected) {
         Paycheck paycheck = new Paycheck();
-        paycheck.setCredits(Collections.singletonList(new Item().setAmount(input)));
-        assertThat(paycheck.getCredits().stream().findFirst().map(Item::getAmount).orElse(null), is(expected));
+        paycheck.setCredits(Collections.singletonList(new Item().setValue(input)));
+        assertThat(first(paycheck.getCredits()), is(expected));
     }
 
     @Test
@@ -64,7 +66,7 @@ public class PaycheckTest {
     public void getAndSetNetIncomeWithValidValue(BigDecimal input, BigDecimal expected) {
         Paycheck paycheck = new Paycheck();
         paycheck.setNetIncome(input);
-        assertThat(paycheck.getNetIncome().setScale(2, RoundingMode.HALF_EVEN), is(expected));
+        assertThat(scaled(paycheck.getNetIncome()), is(expected));
     }
 
     @Test
@@ -72,6 +74,18 @@ public class PaycheckTest {
         Paycheck paycheck = new Paycheck();
         paycheck.setNetIncome(null);
         assertThat(paycheck.getNetIncome(), is(BigDecimal.ZERO));
+    }
+
+    private BigDecimal scaled(@NotNull BigDecimal value) {
+        return value.setScale(2, RoundingMode.HALF_EVEN);
+    }
+
+    private BigDecimal first(@NotNull List<Item> collection) {
+        return collection
+                .stream()
+                .findFirst()
+                .map(Item::getValue)
+                .orElse(null);
     }
 
 }
