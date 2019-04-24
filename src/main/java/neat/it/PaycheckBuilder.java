@@ -160,34 +160,66 @@ public class PaycheckBuilder {
 
         BigDecimal numOfMonths = new BigDecimal(12);
         BigDecimal numOfSalaries = numOfMonths.add(additionalSalaries);
+        BigDecimal netIncomeAccumulator = BigDecimal.ZERO;
+        Paycheck paycheck = new Paycheck();
 
-        BigDecimal grossIncome = this.grossIncome.divide(numOfSalaries, MathContext.DECIMAL128);
-        BigDecimal socialTax = this.socialTax.divide(numOfSalaries, MathContext.DECIMAL128);
-        BigDecimal stateTax = this.stateTax.divide(numOfSalaries, MathContext.DECIMAL128);
-        BigDecimal federalTax = this.federalTax.divide(numOfMonths, MathContext.DECIMAL128);
-        BigDecimal localTax = this.localTax.divide(numOfMonths, MathContext.DECIMAL128);
-        BigDecimal salaryCredit = this.salaryCredit.divide(numOfMonths, MathContext.DECIMAL128);
-        BigDecimal salaryCredit2 = this.salaryCredit2.divide(numOfMonths, MathContext.DECIMAL128);
-        BigDecimal netBonus = this.netBonus.divide(numOfMonths, MathContext.DECIMAL128);
-        BigDecimal netIncome = grossIncome
-                .subtract(socialTax)
-                .subtract(stateTax)
-                .subtract(federalTax)
-                .subtract(localTax)
-                .add(salaryCredit)
-                .add(salaryCredit2)
-                .add(netBonus);
+        if (grossIncome.compareTo(BigDecimal.ZERO) > 0) {
+            BigDecimal value = grossIncome.divide(numOfSalaries, MathContext.DECIMAL128);
+            paycheck.setGrossIncome(value);
+            netIncomeAccumulator = netIncomeAccumulator.add(value);
+        }
 
-        return new Paycheck()
-                .setGrossIncome(grossIncome)
-                .addTaxes(new Item().setCode("Social tax").setValue(socialTax))
-                .addTaxes(new Item().setCode("State tax").setValue(stateTax))
-                .addTaxes(new Item().setCode("Federal tax").setValue(federalTax))
-                .addTaxes(new Item().setCode("Local tax").setValue(localTax))
-                .addCredits(new Item().setCode("Salary credit").setValue(salaryCredit))
-                .addCredits(new Item().setCode("Salary credit 2").setValue(salaryCredit2))
-                .addCredits(new Item().setCode("Net bonus").setValue(netBonus))
-                .setNetIncome(netIncome);
+        if (socialTax.compareTo(BigDecimal.ZERO) > 0) {
+            BigDecimal value = socialTax.divide(numOfSalaries, MathContext.DECIMAL128);
+            Item item = new Item().setCode("Social tax").setValue(value);
+            paycheck.addTaxes(item);
+            netIncomeAccumulator = netIncomeAccumulator.subtract(value);
+        }
+
+        if (stateTax.compareTo(BigDecimal.ZERO) > 0) {
+            BigDecimal value = stateTax.divide(numOfSalaries, MathContext.DECIMAL128);
+            Item item = new Item().setCode("State tax").setValue(value);
+            paycheck.addTaxes(item);
+            netIncomeAccumulator = netIncomeAccumulator.subtract(value);
+        }
+
+        if (federalTax.compareTo(BigDecimal.ZERO) > 0) {
+            BigDecimal value = federalTax.divide(numOfMonths, MathContext.DECIMAL128);
+            Item item = new Item().setCode("Federal tax").setValue(value);
+            paycheck.addTaxes(item);
+            netIncomeAccumulator = netIncomeAccumulator.subtract(value);
+        }
+
+        if (localTax.compareTo(BigDecimal.ZERO) > 0) {
+            BigDecimal value = localTax.divide(numOfMonths, MathContext.DECIMAL128);
+            Item item = new Item().setCode("Local tax").setValue(value);
+            paycheck.addTaxes(item);
+            netIncomeAccumulator = netIncomeAccumulator.subtract(value);
+        }
+
+        if (salaryCredit.compareTo(BigDecimal.ZERO) > 0) {
+            BigDecimal value = salaryCredit.divide(numOfMonths, MathContext.DECIMAL128);
+            Item item = new Item().setCode("Salary credit").setValue(value);
+            paycheck.addCredits(item);
+            netIncomeAccumulator = netIncomeAccumulator.add(value);
+        }
+
+        if (salaryCredit2.compareTo(BigDecimal.ZERO) > 0) {
+            BigDecimal value = salaryCredit2.divide(numOfMonths, MathContext.DECIMAL128);
+            Item item = new Item().setCode("Salary credit 2").setValue(value);
+            paycheck.addCredits(item);
+            netIncomeAccumulator = netIncomeAccumulator.add(value);
+        }
+
+        if (netBonus.compareTo(BigDecimal.ZERO) > 0) {
+            BigDecimal value = netBonus.divide(numOfMonths, MathContext.DECIMAL128);
+            Item item = new Item().setCode("Net bonus").setValue(value);
+            paycheck.addCredits(item);
+            netIncomeAccumulator = netIncomeAccumulator.add(value);
+        }
+
+        paycheck.setNetIncome(netIncomeAccumulator);
+        return paycheck;
 
     }
 
