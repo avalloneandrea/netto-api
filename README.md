@@ -6,4 +6,5 @@
 # Neat (API)
 
 A REST API for computing your net income given your gross income.
+
 You can check the API documentation [here](https://neatapi.herokuapp.com) and the responsive web app [here](https://neatapp.herokuapp.com).
