@@ -213,7 +213,7 @@ public class PaycheckBuilder {
 
         if (netBonus.compareTo(BigDecimal.ZERO) > 0) {
             BigDecimal value = netBonus.divide(numOfMonths, MathContext.DECIMAL128);
-            Item item = new Item().setCode("Net bonus").setValue(value);
+            Item item = new Item().setCode("NET_BONUS").setValue(value);
             paycheck.addCredits(item);
             netIncomeAccumulator = netIncomeAccumulator.add(value);
         }
