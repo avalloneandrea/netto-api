@@ -64,6 +64,7 @@ cmake-build-*/
 *.iws
 
 # IntelliJ
+.idea/
 out/
 
 # mpeltonen/sbt-idea plugin
@@ -87,8 +88,10 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
-# Intellij Patch #
-.idea/
+# JetBrains templates
+**___jb_tmp___
+
+# IntelliJ Patch #
 *.iml
 modules.xml
 .idea/misc.xml
