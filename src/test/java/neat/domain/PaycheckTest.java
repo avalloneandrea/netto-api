@@ -24,7 +24,7 @@ public class PaycheckTest {
     }
 
     @Test
-    public void getAndSetGrossIncomeWithNullValue() {
+    public void getAndSetGrossIncomeWithInvalidValue() {
         Paycheck paycheck = new Paycheck().setGrossIncome(null);
         assertThat(paycheck.getGrossIncome(), is(BigDecimal.ZERO));
     }
@@ -37,7 +37,7 @@ public class PaycheckTest {
     }
 
     @Test
-    public void getAndSetTaxesWithNullValue() {
+    public void getAndSetTaxesWithInvalidValue() {
         Paycheck paycheck = new Paycheck().setTaxes(null);
         assertThat(paycheck.getTaxes(), is(empty()));
     }
@@ -50,7 +50,7 @@ public class PaycheckTest {
     }
 
     @Test
-    public void getAndSetCreditsWithNullValue() {
+    public void getAndSetCreditsWithInvalidValue() {
         Paycheck paycheck = new Paycheck().setCredits(null);
         assertThat(paycheck.getCredits(), is(empty()));
     }
@@ -63,7 +63,7 @@ public class PaycheckTest {
     }
 
     @Test
-    public void getAndSetNetIncomeWithNullValue() {
+    public void getAndSetNetIncomeWithInvalidValue() {
         Paycheck paycheck = new Paycheck().setNetIncome(null);
         assertThat(paycheck.getNetIncome(), is(BigDecimal.ZERO));
     }

@@ -4,6 +4,7 @@ import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 import java.math.BigDecimal;
 
@@ -13,15 +14,16 @@ import static org.hamcrest.core.Is.is;
 public class ItemTest {
 
     @ParameterizedTest
-    @CsvSource({"CODE, CODE"})
+    @CsvSource({"code, code"})
     public void getAndSetCodeWithValidValue(String input, String expected) {
         Item item = new Item().setCode(input);
         assertThat(item.getCode(), is(expected));
     }
 
-    @Test
-    public void getAndSetCodeWithNullValue() {
-        Item item = new Item().setCode(null);
+    @ParameterizedTest
+    @NullAndEmptySource
+    public void getAndSetCodeWithInvalidValue(String input) {
+        Item item = new Item().setCode(input);
         assertThat(item.getCode(), is(Strings.EMPTY));
     }
 
@@ -33,7 +35,7 @@ public class ItemTest {
     }
 
     @Test
-    public void getAndSetValueWithNullValue() {
+    public void getAndSetValueWithInvalidValue() {
         Item item = new Item().setValue(null);
         assertThat(item.getValue(), is(BigDecimal.ZERO));
     }
