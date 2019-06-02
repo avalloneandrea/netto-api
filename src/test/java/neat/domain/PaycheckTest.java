@@ -19,60 +19,52 @@ public class PaycheckTest {
     @ParameterizedTest
     @CsvSource({"-20000.00, -20000.00", "-1.00, -1.00", "0.00, 0.00", "1.00, 1.00", "20000.00, 20000.00"})
     public void getAndSetGrossIncomeWithValidValue(BigDecimal input, BigDecimal expected) {
-        Paycheck paycheck = new Paycheck();
-        paycheck.setGrossIncome(input);
+        Paycheck paycheck = new Paycheck().setGrossIncome(input);
         assertThat(scaled(paycheck.getGrossIncome()), is(expected));
     }
 
     @Test
     public void getAndSetGrossIncomeWithNullValue() {
-        Paycheck paycheck = new Paycheck();
-        paycheck.setGrossIncome(null);
+        Paycheck paycheck = new Paycheck().setGrossIncome(null);
         assertThat(paycheck.getGrossIncome(), is(BigDecimal.ZERO));
     }
 
     @ParameterizedTest
     @CsvSource({"-300.00, -300.00", "-1.00, -1.00", "0.00, 0.00", "1.00, 1.00", "300.00, 300.00"})
     public void getAndSetTaxesWithValidValue(BigDecimal input, BigDecimal expected) {
-        Paycheck paycheck = new Paycheck();
-        paycheck.setTaxes(Collections.singletonList(new Item().setValue(input)));
+        Paycheck paycheck = new Paycheck().setTaxes(Collections.singletonList(new Item().setValue(input)));
         assertThat(first(paycheck.getTaxes()), is(expected));
     }
 
     @Test
     public void getAndSetTaxesWithNullValue() {
-        Paycheck paycheck = new Paycheck();
-        paycheck.setTaxes(null);
+        Paycheck paycheck = new Paycheck().setTaxes(null);
         assertThat(paycheck.getTaxes(), is(empty()));
     }
 
     @ParameterizedTest
     @CsvSource({"-300.00, -300.00", "-1.00, -1.00", "0.00, 0.00", "1.00, 1.00", "300.00, 300.00"})
     public void getAndSetCreditsWithValidValue(BigDecimal input, BigDecimal expected) {
-        Paycheck paycheck = new Paycheck();
-        paycheck.setCredits(Collections.singletonList(new Item().setValue(input)));
+        Paycheck paycheck = new Paycheck().setCredits(Collections.singletonList(new Item().setValue(input)));
         assertThat(first(paycheck.getCredits()), is(expected));
     }
 
     @Test
     public void getAndSetCreditsWithNullValue() {
-        Paycheck paycheck = new Paycheck();
-        paycheck.setCredits(null);
+        Paycheck paycheck = new Paycheck().setCredits(null);
         assertThat(paycheck.getCredits(), is(empty()));
     }
 
     @ParameterizedTest
     @CsvSource({"-1200.00, -1200.00", "-1.00, -1.00", "0.00, 0.00", "1.00, 1.00", "1200.00, 1200.00"})
     public void getAndSetNetIncomeWithValidValue(BigDecimal input, BigDecimal expected) {
-        Paycheck paycheck = new Paycheck();
-        paycheck.setNetIncome(input);
+        Paycheck paycheck = new Paycheck().setNetIncome(input);
         assertThat(scaled(paycheck.getNetIncome()), is(expected));
     }
 
     @Test
     public void getAndSetNetIncomeWithNullValue() {
-        Paycheck paycheck = new Paycheck();
-        paycheck.setNetIncome(null);
+        Paycheck paycheck = new Paycheck().setNetIncome(null);
         assertThat(paycheck.getNetIncome(), is(BigDecimal.ZERO));
     }
 
