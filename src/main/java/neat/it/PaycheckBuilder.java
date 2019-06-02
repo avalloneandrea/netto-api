@@ -2,10 +2,12 @@ package neat.it;
 
 import neat.domain.Item;
 import neat.domain.Paycheck;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 
+@Component
 public class PaycheckBuilder {
 
     private static final BigDecimal NO_TAX_AREA = new BigDecimal(8174);
