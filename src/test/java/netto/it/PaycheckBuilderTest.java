@@ -1,6 +1,6 @@
-package neat.it;
+package netto.it;
 
-import neat.domain.Paycheck;
+import netto.domain.Paycheck;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

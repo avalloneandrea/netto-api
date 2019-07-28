@@ -1,4 +1,4 @@
-package neat.domain;
+package netto.domain;
 
 import org.apache.logging.log4j.util.Strings;
 import org.junit.jupiter.api.Test;

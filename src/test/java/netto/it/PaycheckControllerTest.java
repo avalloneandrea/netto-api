@@ -1,4 +1,4 @@
-package neat.it;
+package netto.it;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;

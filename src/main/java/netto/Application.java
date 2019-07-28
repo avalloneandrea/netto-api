@@ -1,4 +1,4 @@
-package neat;
+package netto;
 
 import io.swagger.annotations.Api;
 import org.springframework.boot.SpringApplication;

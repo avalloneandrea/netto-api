@@ -1,4 +1,4 @@
-package neat.domain;
+package netto.domain;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
-package neat.it;
+package netto.it;
 
-import neat.domain.Item;
-import neat.domain.Paycheck;
+import netto.domain.Item;
+import netto.domain.Paycheck;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
