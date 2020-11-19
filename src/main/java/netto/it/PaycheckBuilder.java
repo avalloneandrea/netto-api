@@ -144,16 +144,23 @@ public class PaycheckBuilder {
         if (taxableIncome.compareTo(NO_TAX_AREA) <= 0)
             return BigDecimal.ZERO;
 
-        else if (taxableIncome.compareTo(new BigDecimal(24600)) <= 0)
-            return new BigDecimal(960);
+        else if (taxableIncome.compareTo(new BigDecimal(28000)) <= 0)
+            return new BigDecimal(1200);
 
-        else if (taxableIncome.compareTo(new BigDecimal(26600)) <= 0)
-            return new BigDecimal(26600)
+        else if (taxableIncome.compareTo(new BigDecimal(35000)) <= 0)
+            return new BigDecimal(35500)
                     .subtract(taxableIncome)
-                    .divide(new BigDecimal(2000), MathContext.DECIMAL128)
+                    .divide(new BigDecimal(7000), MathContext.DECIMAL128)
+                    .multiply(new BigDecimal(240))
+                    .add(new BigDecimal(960));
+
+        else if (taxableIncome.compareTo(new BigDecimal(40000)) <= 0)
+            return new BigDecimal(40000)
+                    .subtract(taxableIncome)
+                    .divide(new BigDecimal(2500), MathContext.DECIMAL128)
                     .multiply(new BigDecimal(960));
 
-        else // if (taxableIncome.compareTo(new BigDecimal(26600)) > 0)
+        else // if (taxableIncome.compareTo(new BigDecimal(40000)) > 0)
             return BigDecimal.ZERO;
 
     }

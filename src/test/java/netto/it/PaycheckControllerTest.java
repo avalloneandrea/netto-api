@@ -57,7 +57,7 @@ public class PaycheckControllerTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"-600.00", "0", "600.00"})
+    @CsvSource({"-500.00", "0", "500.00"})
     @EmptySource
     public void getPaycheckWithValidNetBonus(String input) throws Exception {
         webEnvironment
@@ -66,7 +66,7 @@ public class PaycheckControllerTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"sixhundred"})
+    @CsvSource({"fivehundred"})
     @NullSource
     public void getPaycheckWithInvalidNetBonus(String input) throws Exception {
         webEnvironment

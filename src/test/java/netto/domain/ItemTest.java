@@ -28,7 +28,7 @@ public class ItemTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"-300.00, -300.00", "-1.00, -1.00", "0.00, 0.00", "1.00, 1.00", "300.00, 300.00"})
+    @CsvSource({"-500.00, -500.00", "0.00, 0.00", "500.00, 500.00"})
     public void getAndSetValueWithValidValue(BigDecimal input, BigDecimal expected) {
         Item item = new Item().setValue(input);
         assertThat(item.getValue(), is(expected));

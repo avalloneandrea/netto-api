@@ -17,7 +17,7 @@ import static org.hamcrest.core.Is.is;
 public class PaycheckTest {
 
     @ParameterizedTest
-    @CsvSource({"-20000.00, -20000.00", "-1.00, -1.00", "0.00, 0.00", "1.00, 1.00", "20000.00, 20000.00"})
+    @CsvSource({"-20000.00, -20000.00", "0.00, 0.00", "20000.00, 20000.00"})
     public void getAndSetGrossIncomeWithValidValue(BigDecimal input, BigDecimal expected) {
         Paycheck paycheck = new Paycheck().setGrossIncome(input);
         assertThat(scaled(paycheck.getGrossIncome()), is(expected));
@@ -30,7 +30,7 @@ public class PaycheckTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"-300.00, -300.00", "-1.00, -1.00", "0.00, 0.00", "1.00, 1.00", "300.00, 300.00"})
+    @CsvSource({"-500.00, -500.00", "0.00, 0.00", "500.00, 500.00"})
     public void getAndSetTaxesWithValidValue(BigDecimal input, BigDecimal expected) {
         Paycheck paycheck = new Paycheck().setTaxes(Collections.singletonList(new Item().setValue(input)));
         assertThat(first(paycheck.getTaxes()), is(expected));
@@ -43,7 +43,7 @@ public class PaycheckTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"-300.00, -300.00", "-1.00, -1.00", "0.00, 0.00", "1.00, 1.00", "300.00, 300.00"})
+    @CsvSource({"-500.00, -500.00", "0.00, 0.00", "500.00, 500.00"})
     public void getAndSetCreditsWithValidValue(BigDecimal input, BigDecimal expected) {
         Paycheck paycheck = new Paycheck().setCredits(Collections.singletonList(new Item().setValue(input)));
         assertThat(first(paycheck.getCredits()), is(expected));
@@ -56,7 +56,7 @@ public class PaycheckTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"-1200.00, -1200.00", "-1.00, -1.00", "0.00, 0.00", "1.00, 1.00", "1200.00, 1200.00"})
+    @CsvSource({"-1500.00, -1500.00", "0.00, 0.00", "1500.00, 1500.00"})
     public void getAndSetNetIncomeWithValidValue(BigDecimal input, BigDecimal expected) {
         Paycheck paycheck = new Paycheck().setNetIncome(input);
         assertThat(scaled(paycheck.getNetIncome()), is(expected));
