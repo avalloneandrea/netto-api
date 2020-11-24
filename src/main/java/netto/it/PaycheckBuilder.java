@@ -148,7 +148,7 @@ public class PaycheckBuilder {
             return new BigDecimal(1200);
 
         else if (taxableIncome.compareTo(new BigDecimal(35000)) <= 0)
-            return new BigDecimal(35500)
+            return new BigDecimal(35000)
                     .subtract(taxableIncome)
                     .divide(new BigDecimal(7000), MathContext.DECIMAL128)
                     .multiply(new BigDecimal(240))

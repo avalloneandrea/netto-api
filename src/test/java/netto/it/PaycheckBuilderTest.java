@@ -35,7 +35,7 @@ public class PaycheckBuilderTest {
 
     @ParameterizedTest
     @CsvSource({"-20000.00, 0.00", "0.00, 0.00", "8174.00, 618.57", "15000.00, 1077.46", "28000.00, 1728.00",
-            "35000.00, 2034.56", "40000.00, 2271.75", "55000.00, 2784.65", "75000.00, 3632.17", "100000.00, 4668.48"})
+            "35000.00, 2033.13", "40000.00, 2271.75", "55000.00, 2784.65", "75000.00, 3632.17", "100000.00, 4668.48"})
     public void buildPaycheckWithValidGrossIncome(double input, BigDecimal expected) {
         Paycheck paycheck = paycheckBuilder
                 .setAdditionalSalaries(0)
