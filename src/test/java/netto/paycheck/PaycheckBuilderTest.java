@@ -1,4 +1,4 @@
-package netto.it;
+package netto.paycheck;
 
 import netto.domain.Paycheck;
 import org.junit.jupiter.api.extension.ExtendWith;

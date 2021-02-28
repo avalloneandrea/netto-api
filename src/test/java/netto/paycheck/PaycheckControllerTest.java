@@ -1,4 +1,4 @@
-package netto.it;
+package netto.paycheck;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,7 +25,7 @@ public class PaycheckControllerTest {
     @EmptySource
     public void getPaycheckWithValidAdditionalSalaries(String input) throws Exception {
         webEnvironment
-                .perform(get("/it/paycheck?additionalSalaries=" + input))
+                .perform(get("/paycheck?additionalSalaries=" + input))
                 .andExpect(status().is2xxSuccessful());
     }
 
@@ -34,7 +34,7 @@ public class PaycheckControllerTest {
     @NullSource
     public void getPaycheckWithInvalidAdditionalSalaries(String input) throws Exception {
         webEnvironment
-                .perform(get("/it/paycheck?additionalSalaries=" + input))
+                .perform(get("/paycheck?additionalSalaries=" + input))
                 .andExpect(status().is4xxClientError());
     }
 
@@ -43,7 +43,7 @@ public class PaycheckControllerTest {
     @EmptySource
     public void getPaycheckWithValidGrossIncome(String input) throws Exception {
         webEnvironment
-                .perform(get("/it/paycheck?grossIncome=" + input))
+                .perform(get("/paycheck?grossIncome=" + input))
                 .andExpect(status().is2xxSuccessful());
     }
 
@@ -52,7 +52,7 @@ public class PaycheckControllerTest {
     @NullSource
     public void getPaycheckWithInvalidGrossIncome(String input) throws Exception {
         webEnvironment
-                .perform(get("/it/paycheck?grossIncome=" + input))
+                .perform(get("/paycheck?grossIncome=" + input))
                 .andExpect(status().is4xxClientError());
     }
 
@@ -61,7 +61,7 @@ public class PaycheckControllerTest {
     @EmptySource
     public void getPaycheckWithValidNetBonus(String input) throws Exception {
         webEnvironment
-                .perform(get("/it/paycheck?netBonus=" + input))
+                .perform(get("/paycheck?netBonus=" + input))
                 .andExpect(status().is2xxSuccessful());
     }
 
@@ -70,7 +70,7 @@ public class PaycheckControllerTest {
     @NullSource
     public void getPaycheckWithInvalidNetBonus(String input) throws Exception {
         webEnvironment
-                .perform(get("/it/paycheck?netBonus=" + input))
+                .perform(get("/paycheck?netBonus=" + input))
                 .andExpect(status().is4xxClientError());
     }
 
