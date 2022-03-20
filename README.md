@@ -1,6 +1,6 @@
-[![Travis](https://img.shields.io/travis/com/avalloneandrea/netto-api.svg)](https://travis-ci.com/avalloneandrea/netto-api)
-[![Coveralls](https://img.shields.io/coveralls/github/avalloneandrea/netto-api.svg)](https://coveralls.io/github/avalloneandrea/netto-api)
-[![Heroku](https://img.shields.io/badge/deploy-active-brightgreen.svg)](https://github.com/avalloneandrea/netto-api/deployments)
+[![Build](https://github.com/avalloneandrea/netto-api/actions/workflows/build.yml/badge.svg)](https://github.com/avalloneandrea/netto-api/actions/workflows/build.yml)
+[![Coverage](.github/badges/jacoco.svg)](https://github.com/avalloneandrea/netto-api/actions/workflows/build.yml)
+[![Deploy](https://img.shields.io/badge/deploy-active-brightgreen.svg)](https://github.com/avalloneandrea/netto-api/deployments)
 [![License](https://img.shields.io/github/license/avalloneandrea/netto-api.svg?color=bright)](https://github.com/avalloneandrea/netto-api/blob/master/LICENSE)
 
 # Netto (API)
