@@ -56,11 +56,12 @@ public class PaycheckBuilder {
         return paycheck();
     }
 
-
     private BigDecimal socialTax() {
         if (grossIncome.compareTo(BigDecimal.ZERO) <= 0)
             return BigDecimal.ZERO;
-        else // if (grossIncome.compareTo(BigDecimal.ZERO) > 0)
+        else if (grossIncome.compareTo(BigDecimal.valueOf(35000)) <= 0)
+            return grossIncome.multiply(BigDecimal.valueOf(0.0839));
+        else // if (grossIncome.compareTo(BigDecimal.valueOf(35000)) > 0)
             return grossIncome.multiply(BigDecimal.valueOf(0.0919));
     }
 
@@ -79,26 +80,20 @@ public class PaycheckBuilder {
         else if (taxableIncome.compareTo(BigDecimal.valueOf(28000)) <= 0)
             return taxableIncome
                     .subtract(BigDecimal.valueOf(15000))
-                    .multiply(BigDecimal.valueOf(0.27))
+                    .multiply(BigDecimal.valueOf(0.25))
                     .add(BigDecimal.valueOf(3450));
 
-        else if (taxableIncome.compareTo(BigDecimal.valueOf(55000)) <= 0)
+        else if (taxableIncome.compareTo(BigDecimal.valueOf(50000)) <= 0)
             return taxableIncome
                     .subtract(BigDecimal.valueOf(28000))
-                    .multiply(BigDecimal.valueOf(0.38))
-                    .add(BigDecimal.valueOf(6960));
+                    .multiply(BigDecimal.valueOf(0.35))
+                    .add(BigDecimal.valueOf(6700));
 
-        else if (taxableIncome.compareTo(BigDecimal.valueOf(75000)) <= 0)
+        else // if (taxableIncome.compareTo(BigDecimal.valueOf(50000)) > 0)
             return taxableIncome
-                    .subtract(BigDecimal.valueOf(55000))
-                    .multiply(BigDecimal.valueOf(0.41))
-                    .add(BigDecimal.valueOf(17220));
-
-        else // if (taxableIncome.compareTo(BigDecimal.valueOf(75000)) > 0)
-            return taxableIncome
-                    .subtract(BigDecimal.valueOf(75000))
+                    .subtract(BigDecimal.valueOf(50000))
                     .multiply(BigDecimal.valueOf(0.43))
-                    .add(BigDecimal.valueOf(25420));
+                    .add(BigDecimal.valueOf(14400));
 
     }
 
@@ -121,20 +116,23 @@ public class PaycheckBuilder {
         if (taxableIncome.compareTo(NO_TAX_AREA) <= 0)
             return BigDecimal.ZERO;
 
+        else if (taxableIncome.compareTo(BigDecimal.valueOf(15000)) <= 0)
+            return BigDecimal.valueOf(1880);
+
         else if (taxableIncome.compareTo(BigDecimal.valueOf(28000)) <= 0)
             return BigDecimal.valueOf(28000)
                     .subtract(taxableIncome)
-                    .divide(BigDecimal.valueOf(20000), MathContext.DECIMAL128)
-                    .multiply(BigDecimal.valueOf(902))
-                    .add(BigDecimal.valueOf(978));
+                    .divide(BigDecimal.valueOf(13000), MathContext.DECIMAL128)
+                    .multiply(BigDecimal.valueOf(1190))
+                    .add(BigDecimal.valueOf(1910));
 
-        else if (taxableIncome.compareTo(BigDecimal.valueOf(55000)) <= 0)
-            return BigDecimal.valueOf(55000)
+        else if (taxableIncome.compareTo(BigDecimal.valueOf(50000)) <= 0)
+            return BigDecimal.valueOf(50000)
                     .subtract(taxableIncome)
-                    .divide(BigDecimal.valueOf(27000), MathContext.DECIMAL128)
-                    .multiply(BigDecimal.valueOf(978));
+                    .divide(BigDecimal.valueOf(22000), MathContext.DECIMAL128)
+                    .multiply(BigDecimal.valueOf(1910));
 
-        else // if (taxableIncome.compareTo(BigDecimal.valueOf(55000)) > 0)
+        else // if (taxableIncome.compareTo(BigDecimal.valueOf(50000)) > 0)
             return BigDecimal.ZERO;
 
     }
@@ -144,23 +142,16 @@ public class PaycheckBuilder {
         if (taxableIncome.compareTo(NO_TAX_AREA) <= 0)
             return BigDecimal.ZERO;
 
-        else if (taxableIncome.compareTo(BigDecimal.valueOf(28000)) <= 0)
+        else if (taxableIncome.compareTo(BigDecimal.valueOf(15000)) <= 0)
             return BigDecimal.valueOf(1200);
 
+        else if (taxableIncome.compareTo(BigDecimal.valueOf(25000)) <= 0)
+            return BigDecimal.ZERO;
+
         else if (taxableIncome.compareTo(BigDecimal.valueOf(35000)) <= 0)
-            return BigDecimal.valueOf(35000)
-                    .subtract(taxableIncome)
-                    .divide(BigDecimal.valueOf(7000), MathContext.DECIMAL128)
-                    .multiply(BigDecimal.valueOf(240))
-                    .add(BigDecimal.valueOf(960));
+            return BigDecimal.valueOf(65);
 
-        else if (taxableIncome.compareTo(BigDecimal.valueOf(40000)) <= 0)
-            return BigDecimal.valueOf(40000)
-                    .subtract(taxableIncome)
-                    .divide(BigDecimal.valueOf(2500), MathContext.DECIMAL128)
-                    .multiply(BigDecimal.valueOf(960));
-
-        else // if (taxableIncome.compareTo(BigDecimal.valueOf(40000)) > 0)
+        else // if (taxableIncome.compareTo(BigDecimal.valueOf(35000)) > 0)
             return BigDecimal.ZERO;
 
     }

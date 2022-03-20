@@ -23,7 +23,7 @@ public class PaycheckBuilderTest {
     private PaycheckBuilder paycheckBuilder;
 
     @ParameterizedTest
-    @CsvSource({"-2, 1330.50", "-1, 1330.50", "0, 1330.50", "1, 1241.66", "2, 1165.52"})
+    @CsvSource({"-2, 1359.91", "-1, 1359.91", "0, 1359.91", "1, 1269.90", "2, 1192.75"})
     public void buildPaycheckWithValidAdditionalSalaries(int input, BigDecimal expected) {
         Paycheck paycheck = paycheckBuilder
                 .setAdditionalSalaries(input)
@@ -34,8 +34,8 @@ public class PaycheckBuilderTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"-20000.00, 0.00", "0.00, 0.00", "8174.00, 618.57", "15000.00, 1077.46", "28000.00, 1728.00",
-            "35000.00, 2033.13", "40000.00, 2271.75", "55000.00, 2784.65", "75000.00, 3632.17", "100000.00, 4668.48"})
+    @CsvSource({"-20000.00, 0.00", "0.00, 0.00", "8174.00, 624.02", "15000.00, 1106.01", "28000.00, 1750.19",
+            "35000.00, 2054.67", "40000.00, 2239.16", "55000.00, 2846.32", "75000.00, 3666.15", "100000.00, 4690.98"})
     public void buildPaycheckWithValidGrossIncome(double input, BigDecimal expected) {
         Paycheck paycheck = paycheckBuilder
                 .setAdditionalSalaries(0)
@@ -46,7 +46,7 @@ public class PaycheckBuilderTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"-500.00, 1330.50", "0.00, 1330.50", "500.00, 1372.16"})
+    @CsvSource({"-500.00, 1359.91", "0.00, 1359.91", "500.00, 1401.57"})
     public void buildPaycheckWithValidNetBonus(double input, BigDecimal expected) {
         Paycheck paycheck = paycheckBuilder
                 .setAdditionalSalaries(0)
