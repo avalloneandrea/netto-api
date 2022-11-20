@@ -1,6 +1,6 @@
 package netto.domain;
 
-import org.apache.logging.log4j.util.Strings;
+import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
+@QuarkusTest
 public class ItemTest {
 
     @ParameterizedTest
@@ -24,7 +25,7 @@ public class ItemTest {
     @NullAndEmptySource
     public void getAndSetCodeWithInvalidValue(String input) {
         Item item = new Item().setCode(input);
-        assertThat(item.getCode(), is(Strings.EMPTY));
+        assertThat(item.getCode(), is(""));
     }
 
     @ParameterizedTest

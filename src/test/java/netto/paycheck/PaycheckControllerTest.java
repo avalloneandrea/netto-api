@@ -1,77 +1,82 @@
 package netto.paycheck;
 
-import org.junit.jupiter.api.extension.ExtendWith;
+import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.junit.mockito.InjectMock;
+import netto.domain.Paycheck;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.NullSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.MockMvc;
+import org.mockito.Mockito;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static io.restassured.RestAssured.given;
+import static org.mockito.ArgumentMatchers.anyDouble;
+import static org.mockito.ArgumentMatchers.anyInt;
 
-@ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = {PaycheckController.class, PaycheckBuilder.class})
+@QuarkusTest
 public class PaycheckControllerTest {
 
-    @Autowired
-    private MockMvc webEnvironment;
+    @InjectMock
+    PaycheckBuilder paycheckBuilder;
+
+    @BeforeEach
+    public void setup() {
+        Mockito.when(paycheckBuilder.setGrossIncome(anyDouble())).thenReturn(paycheckBuilder);
+        Mockito.when(paycheckBuilder.setAdditionalSalaries(anyInt())).thenReturn(paycheckBuilder);
+        Mockito.when(paycheckBuilder.setNetBonus(anyDouble())).thenReturn(paycheckBuilder);
+        Mockito.when(paycheckBuilder.build()).thenReturn(new Paycheck());
+    }
 
     @ParameterizedTest
     @CsvSource({"-1", "0", "1"})
-    @EmptySource
-    public void getPaycheckWithValidAdditionalSalaries(String input) throws Exception {
-        webEnvironment
-                .perform(get("/paycheck?additionalSalaries=" + input))
-                .andExpect(status().is2xxSuccessful());
+    public void getPaycheckWithValidAdditionalSalaries(String input) {
+        given()
+                .when().get("/paycheck?additionalSalaries=" + input)
+                .then().statusCode(200);
+
     }
 
     @ParameterizedTest
     @CsvSource({"1.5", "two"})
     @NullSource
-    public void getPaycheckWithInvalidAdditionalSalaries(String input) throws Exception {
-        webEnvironment
-                .perform(get("/paycheck?additionalSalaries=" + input))
-                .andExpect(status().is4xxClientError());
+    public void getPaycheckWithInvalidAdditionalSalaries(String input) {
+        given()
+                .when().get("/paycheck?additionalSalaries=" + input)
+                .then().statusCode(404);
     }
 
     @ParameterizedTest
     @CsvSource({"-20000.00", "0", "20000.00"})
-    @EmptySource
-    public void getPaycheckWithValidGrossIncome(String input) throws Exception {
-        webEnvironment
-                .perform(get("/paycheck?grossIncome=" + input))
-                .andExpect(status().is2xxSuccessful());
+    public void getPaycheckWithValidGrossIncome(String input) {
+        given()
+                .when().get("/paycheck?grossIncome=" + input)
+                .then().statusCode(200);
     }
 
     @ParameterizedTest
     @CsvSource({"twentythousand"})
     @NullSource
-    public void getPaycheckWithInvalidGrossIncome(String input) throws Exception {
-        webEnvironment
-                .perform(get("/paycheck?grossIncome=" + input))
-                .andExpect(status().is4xxClientError());
+    public void getPaycheckWithInvalidGrossIncome(String input) {
+        given()
+                .when().get("/paycheck?grossIncome=" + input)
+                .then().statusCode(404);
     }
 
     @ParameterizedTest
     @CsvSource({"-500.00", "0", "500.00"})
-    @EmptySource
-    public void getPaycheckWithValidNetBonus(String input) throws Exception {
-        webEnvironment
-                .perform(get("/paycheck?netBonus=" + input))
-                .andExpect(status().is2xxSuccessful());
+    public void getPaycheckWithValidNetBonus(String input) {
+        given()
+                .when().get("/paycheck?netBonus=" + input)
+                .then().statusCode(200);
     }
 
     @ParameterizedTest
     @CsvSource({"fivehundred"})
     @NullSource
-    public void getPaycheckWithInvalidNetBonus(String input) throws Exception {
-        webEnvironment
-                .perform(get("/paycheck?netBonus=" + input))
-                .andExpect(status().is4xxClientError());
+    public void getPaycheckWithInvalidNetBonus(String input) {
+        given()
+                .when().get("/paycheck?netBonus=" + input)
+                .then().statusCode(404);
     }
 
 }

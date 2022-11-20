@@ -1,26 +1,23 @@
 package netto.paycheck;
 
+import io.quarkus.test.junit.QuarkusTest;
+import io.smallrye.common.constraint.NotNull;
 import netto.domain.Paycheck;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import javax.validation.constraints.NotNull;
+import javax.inject.Inject;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = PaycheckBuilder.class)
+@QuarkusTest
 public class PaycheckBuilderTest {
 
-    @Autowired
-    private PaycheckBuilder paycheckBuilder;
+    @Inject
+    PaycheckBuilder paycheckBuilder;
 
     @ParameterizedTest
     @CsvSource({"-2, 1359.91", "-1, 1359.91", "0, 1359.91", "1, 1269.90", "2, 1192.75"})

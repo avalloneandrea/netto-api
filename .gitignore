@@ -1,7 +1,6 @@
 ### Java ###
 
 # Compiled class file
-/target
 *.class
 
 # Log file
@@ -24,6 +23,7 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+replay_pid*
 
 
 ### IntelliJ ###
@@ -34,6 +34,9 @@ hs_err_pid*
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+
+# AWS User-specific
+.idea/**/aws.xml
 
 # Generated files
 .idea/**/contentModel.xml
@@ -52,9 +55,14 @@ hs_err_pid*
 .idea/**/libraries
 
 # Gradle and Maven with auto-import
+.idea/artifacts
+.idea/compiler.xml
+.idea/jarRepositories.xml
 .idea/modules.xml
 .idea/*.iml
 .idea/modules
+*.iml
+*.ipr
 
 # CMake
 cmake-build-*/
@@ -67,8 +75,7 @@ cmake-build-*/
 
 # IntelliJ
 .idea/
-out/
-.run/
+target/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
@@ -78,6 +85,9 @@ atlassian-ide-plugin.xml
 
 # Cursive Clojure plugin
 .idea/replstate.xml
+
+# SonarLint plugin
+.idea/sonarlint/
 
 # Crashlytics plugin (for Android Studio and IntelliJ)
 com_crashlytics_export_strings.xml
@@ -91,9 +101,6 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
-# JetBrains templates
-**___jb_tmp___
-
 # IntelliJ Patch #
 *.iml
 modules.xml
@@ -101,7 +108,24 @@ modules.xml
 *.ipr
 
 # Sonarlint plugin
-.idea/sonarlint
+.idea/**/sonarlint/
+
+# SonarQube Plugin
+.idea/**/sonarIssues.xml
+
+# Markdown Navigator plugin
+.idea/**/markdown-navigator.xml
+.idea/**/markdown-navigator-enh.xml
+.idea/**/markdown-navigator/
+
+# Cache file creation bug
+.idea/$CACHE_FILE$
+
+# CodeStream plugin
+.idea/codestream.xml
+
+# Azure Toolkit for IntelliJ plugin
+.idea/**/azureSettings.xml
 
 
 ### macOS ###
@@ -132,3 +156,6 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# iCloud generated files
+*.icloud

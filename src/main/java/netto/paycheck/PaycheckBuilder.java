@@ -2,18 +2,18 @@ package netto.paycheck;
 
 import netto.domain.Item;
 import netto.domain.Paycheck;
-import org.springframework.stereotype.Component;
 
+import javax.enterprise.context.ApplicationScoped;
 import java.math.BigDecimal;
 import java.math.MathContext;
 
-@Component
+@ApplicationScoped
 public class PaycheckBuilder {
 
     private static final BigDecimal NO_TAX_AREA = BigDecimal.valueOf(8174);
 
-    private BigDecimal additionalSalaries;
     private BigDecimal grossIncome;
+    private BigDecimal additionalSalaries;
     private BigDecimal netBonus;
 
     private BigDecimal socialTax;
@@ -25,18 +25,18 @@ public class PaycheckBuilder {
     private BigDecimal salaryCredit2;
 
     public PaycheckBuilder() {
-        this.additionalSalaries = BigDecimal.ZERO;
         this.grossIncome = BigDecimal.ZERO;
+        this.additionalSalaries = BigDecimal.ZERO;
         this.netBonus = BigDecimal.ZERO;
-    }
-
-    public PaycheckBuilder setAdditionalSalaries(int additionalSalaries) {
-        this.additionalSalaries = BigDecimal.valueOf(additionalSalaries).max(BigDecimal.ZERO);
-        return this;
     }
 
     public PaycheckBuilder setGrossIncome(double grossIncome) {
         this.grossIncome = BigDecimal.valueOf(grossIncome).max(BigDecimal.ZERO);
+        return this;
+    }
+
+    public PaycheckBuilder setAdditionalSalaries(int additionalSalaries) {
+        this.additionalSalaries = BigDecimal.valueOf(additionalSalaries).max(BigDecimal.ZERO);
         return this;
     }
 
@@ -57,12 +57,16 @@ public class PaycheckBuilder {
     }
 
     private BigDecimal socialTax() {
+
         if (grossIncome.compareTo(BigDecimal.ZERO) <= 0)
             return BigDecimal.ZERO;
+
         else if (grossIncome.compareTo(BigDecimal.valueOf(35000)) <= 0)
             return grossIncome.multiply(BigDecimal.valueOf(0.0839));
+
         else // if (grossIncome.compareTo(BigDecimal.valueOf(35000)) > 0)
             return grossIncome.multiply(BigDecimal.valueOf(0.0919));
+
     }
 
     private BigDecimal taxableIncome() {
@@ -98,17 +102,23 @@ public class PaycheckBuilder {
     }
 
     private BigDecimal federalTax() {
+
         if (taxableIncome.compareTo(NO_TAX_AREA) <= 0)
             return BigDecimal.ZERO;
+
         else // if (taxableIncome.compareTo(NO_TAX_AREA) > 0)
             return taxableIncome.multiply(BigDecimal.valueOf(0.0203));
+
     }
 
     private BigDecimal localTax() {
+
         if (taxableIncome.compareTo(NO_TAX_AREA) <= 0)
             return BigDecimal.ZERO;
+
         else // if (taxableIncome.compareTo(NO_TAX_AREA) > 0)
             return taxableIncome.multiply(BigDecimal.valueOf(0.008));
+
     }
 
     private BigDecimal salaryCredit() {

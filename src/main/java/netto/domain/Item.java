@@ -1,7 +1,5 @@
 package netto.domain;
 
-import org.apache.logging.log4j.util.Strings;
-
 import java.math.BigDecimal;
 
 import static org.apache.commons.lang3.ObjectUtils.defaultIfNull;
@@ -12,7 +10,7 @@ public class Item {
     private BigDecimal value;
 
     public Item() {
-        this.code = Strings.EMPTY;
+        this.code = "";
         this.value = BigDecimal.ZERO;
     }
 
@@ -21,7 +19,7 @@ public class Item {
     }
 
     public Item setCode(String code) {
-        this.code = defaultIfNull(code, Strings.EMPTY);
+        this.code = defaultIfNull(code, "");
         return this;
     }
 
