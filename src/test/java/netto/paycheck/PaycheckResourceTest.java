@@ -14,7 +14,7 @@ import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.ArgumentMatchers.anyInt;
 
 @QuarkusTest
-public class PaycheckControllerTest {
+public class PaycheckResourceTest {
 
     @InjectMock
     PaycheckBuilder paycheckBuilder;

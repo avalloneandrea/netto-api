@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 
 @Path("/paycheck")
 @Tag(name = "Paychecks", description = "Operations about paychecks")
-public class PaycheckController {
+public class PaycheckResource {
 
     @Inject
     PaycheckBuilder paycheckBuilder;
