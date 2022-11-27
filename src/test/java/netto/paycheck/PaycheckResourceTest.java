@@ -28,24 +28,6 @@ public class PaycheckResourceTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"-1", "0", "1"})
-    public void getPaycheckWithValidAdditionalSalaries(String input) {
-        given()
-                .when().get("/paycheck?additionalSalaries=" + input)
-                .then().statusCode(200);
-
-    }
-
-    @ParameterizedTest
-    @CsvSource({"1.5", "two"})
-    @NullSource
-    public void getPaycheckWithInvalidAdditionalSalaries(String input) {
-        given()
-                .when().get("/paycheck?additionalSalaries=" + input)
-                .then().statusCode(404);
-    }
-
-    @ParameterizedTest
     @CsvSource({"-20000.00", "0", "20000.00"})
     public void getPaycheckWithValidGrossIncome(String input) {
         given()
@@ -59,6 +41,23 @@ public class PaycheckResourceTest {
     public void getPaycheckWithInvalidGrossIncome(String input) {
         given()
                 .when().get("/paycheck?grossIncome=" + input)
+                .then().statusCode(404);
+    }
+
+    @ParameterizedTest
+    @CsvSource({"-1", "0", "1"})
+    public void getPaycheckWithValidAdditionalSalaries(String input) {
+        given()
+                .when().get("/paycheck?additionalSalaries=" + input)
+                .then().statusCode(200);
+    }
+
+    @ParameterizedTest
+    @CsvSource({"1.5", "two"})
+    @NullSource
+    public void getPaycheckWithInvalidAdditionalSalaries(String input) {
+        given()
+                .when().get("/paycheck?additionalSalaries=" + input)
                 .then().statusCode(404);
     }
 
