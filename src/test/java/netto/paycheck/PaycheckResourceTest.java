@@ -23,7 +23,7 @@ public class PaycheckResourceTest {
     public void setup() {
         Mockito.when(paycheckBuilder.setGrossIncome(anyDouble())).thenReturn(paycheckBuilder);
         Mockito.when(paycheckBuilder.setAdditionalSalaries(anyInt())).thenReturn(paycheckBuilder);
-        Mockito.when(paycheckBuilder.setNetBonus(anyDouble())).thenReturn(paycheckBuilder);
+        Mockito.when(paycheckBuilder.setNetAllowance(anyDouble())).thenReturn(paycheckBuilder);
         Mockito.when(paycheckBuilder.build()).thenReturn(new Paycheck());
     }
 
@@ -62,19 +62,19 @@ public class PaycheckResourceTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"-500.00", "0", "500.00"})
-    public void getPaycheckWithValidNetBonus(String input) {
+    @CsvSource({"-100.00", "0", "100.00"})
+    public void getPaycheckWithValidNetAllowance(String input) {
         given()
-                .when().get("/paycheck?netBonus=" + input)
+                .when().get("/paycheck?netAllowance=" + input)
                 .then().statusCode(200);
     }
 
     @ParameterizedTest
-    @CsvSource({"fivehundred"})
+    @CsvSource({"onehundred"})
     @NullSource
-    public void getPaycheckWithInvalidNetBonus(String input) {
+    public void getPaycheckWithInvalidNetAllowance(String input) {
         given()
-                .when().get("/paycheck?netBonus=" + input)
+                .when().get("/paycheck?netAllowance=" + input)
                 .then().statusCode(404);
     }
 

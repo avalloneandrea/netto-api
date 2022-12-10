@@ -22,11 +22,11 @@ public class PaycheckResource {
     public Paycheck getPaycheck(
             @Parameter(description = "Gross income per year") @QueryParam("grossIncome") @DefaultValue("0") double grossIncome,
             @Parameter(description = "Number of additional salaries") @QueryParam("additionalSalaries") @DefaultValue("0") int additionalSalaries,
-            @Parameter(description = "Net bonus per year") @QueryParam("netBonus") @DefaultValue("0") double netBonus) {
+            @Parameter(description = "Net allowance per month") @QueryParam("netAllowance") @DefaultValue("0") double netAllowance) {
         return paycheckBuilder
                 .setGrossIncome(grossIncome)
                 .setAdditionalSalaries(additionalSalaries)
-                .setNetBonus(netBonus)
+                .setNetAllowance(netAllowance)
                 .build();
     }
 
