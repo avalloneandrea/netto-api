@@ -6,7 +6,7 @@
 
     <groupId>netto-api</groupId>
     <artifactId>netto-api</artifactId>
-    <version>1.6.6</version>
+    <version>1.6.7</version>
 
     <properties>
         <compiler-plugin.version>3.8.1</compiler-plugin.version>

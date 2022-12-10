@@ -62,7 +62,7 @@ public class PaycheckBuilder {
             return BigDecimal.ZERO;
 
         else if (grossIncome.compareTo(BigDecimal.valueOf(35000)) <= 0)
-            return grossIncome.multiply(BigDecimal.valueOf(0.0839));
+            return grossIncome.multiply(BigDecimal.valueOf(0.0719));
 
         else // if (grossIncome.compareTo(BigDecimal.valueOf(35000)) > 0)
             return grossIncome.multiply(BigDecimal.valueOf(0.0919));
